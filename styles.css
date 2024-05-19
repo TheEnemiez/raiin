@@ -1,0 +1,320 @@
+body,
+h1,
+h2,
+p,
+ul,
+li,
+ol,
+details,
+summary {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: "Minecraft";
+	background-color: #1a1a1a;
+	color: #fff;
+	line-height: 1.25;
+	background: repeating-linear-gradient(45deg, #171717, #171717 5px, #161616 5px, #161616 25px);
+	user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+}
+pre {
+	text-shadow: 0px 0px 25px rgba(255, 255, 255, 1);
+}
+b {
+	color: #fff;
+}
+a {
+	font-family: "Minecraft";
+}
+nav {
+	background-color: #333;
+	padding: 20px 30px;
+	margin-bottom: 20px;
+}
+code {
+	text-shadow: #85b8ff 0px 0px 10px;
+	color: #a1c4ff;
+	font-family: "Minecraft";
+}
+nav ul {
+	display: flex;
+	justify-content: space-around;
+	list-style: none;
+	padding-left: 0;
+}
+
+nav ul li {
+	margin-right: 30px;
+}
+
+nav ul li a {
+	color: #fff;
+	font-weight: bold;
+	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+	color: #85b8ff;
+}
+
+header {
+	text-align: center;
+	padding: 70px 20px;
+	animation: fadeIn 1s ease-in-out;
+}
+
+main {
+	width: 800px;
+	margin: 0 auto;
+	padding: 10px;
+}
+
+h1 {
+	font-size: 36px;
+}
+
+h2 {
+	font-size: 28px;
+	margin-bottom: 15px;
+}
+
+p {
+	color: #aaaaaa;
+	font-size: 18px;
+	margin-bottom: 15px;
+}
+
+ol {
+	padding-left: 30px;
+}
+
+ul {
+	padding-left: 40px;
+	list-style-type: disc;
+}
+
+summary:hover {
+	background-color: #3a3a3a;
+}
+
+a {
+	color: #85b8ff;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #a1c4ff;
+}
+
+.form-section {
+	padding: 20px;
+	margin: 20px 0;
+	color: #fff;
+}
+.form-grid {
+	display: grid;
+	background-color: #333;
+	padding: 20px;
+	color: #fff;
+}
+
+.form-grid label {
+	display: block;
+	margin-bottom: 5px;
+	margin-top: 15px;
+}
+
+.form-grid input[type="number"],
+.form-grid select {
+	-webkit-appearance: none;
+	-moz-appearance: textfield;
+	appearance: none;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #555;
+	background-color: #444;
+	color: #fff;
+	box-sizing: border-box;
+}
+.form-grid input[type="number"]::-webkit-inner-spin-button,
+.form-grid input[type="number"]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+.form-grid input[type="number"]:focus,
+.form-grid select:focus {
+	outline: none;
+}
+
+.form-grid button {
+	font-family: "Minecraft", sans-serif;
+	margin-top: 15px;
+	grid-column: 1 / -1;
+	padding: 12px 20px;
+	background-color: #666;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.form-grid button:hover {
+	background-color: #777;
+}
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	font-family: "Minecraft", sans-serif;
+	background-color: #444;
+	color: #fff;
+	padding: 10px;
+	font-size: 14px;
+	width: 100px;
+	box-sizing: border-box;
+}
+select:focus {
+	outline: none;
+}
+.hidden {
+	display: none;
+}
+
+.result {
+	background-color: #333;
+	color: #fff;
+	padding: 20px;
+	margin-top: 20px;
+	overflow: auto;
+	font-size: 16px;
+	line-height: 1.5;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	display: none;
+}
+
+#typeSelector,
+#cloakForm,
+#skyForm,
+#thumbnailForm {
+	background-color: #333;
+	border-color: #333;
+}
+
+footer {
+	background-color: #333;
+	color: #fff;
+	text-align: center;
+	margin-top: 30%;
+	padding: 20px 0;
+	position: relative;
+	width: 100%;
+}
+
+footer .social-links {
+	list-style: none;
+	padding: 0;
+	margin: 10px 0;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+}
+
+footer .social-links li {
+	display: inline;
+}
+
+footer .social-links a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 1.2em;
+}
+
+footer .social-links a:hover {
+	color: #ddd;
+}
+
+footer p {
+	margin: 5px 0;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+section#services,
+section#how-to-order,
+section#payment-information,
+section#receive,
+section#terms-and-conditions,
+section#contact-us,
+section#prices {
+	margin-top: 30px;
+}
+
+section#services ol,
+section#how-to-order ol,
+section#payment-information ol,
+section#receive ol,
+section#terms-and-conditions ol,
+section#contact-us ol,
+section#prices ol {
+	padding-left: 20px;
+}
+
+section#services ol li,
+section#how-to-order ol li,
+section#payment-information ol li,
+section#receive ol li,
+section#terms-and-conditions ol li,
+section#contact-us ol li,
+section#prices ol li {
+	margin-bottom: 20px;
+}
+
+.payment-methods {
+	display: block;
+}
+
+.payment-methods h3 {
+	margin-top: 50px;
+	font-size: 25px;
+}
+
+.payment-methods a {
+	text-shadow: #85b8ff 0px 0px 10px;
+}
+.how-to-order a {
+	text-shadow: #85b8ff 0px 0px 10px;
+}
+#contact-us a {
+	text-shadow: #85b8ff 0px 0px 10px;
+}
+.contact-us p {
+	padding: 5px 0px;
+}
+
+body::-webkit-scrollbar {
+	width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+	background: #292929;
+}
+
+body::-webkit-scrollbar-thumb {
+	background-color: #444;
+	border-radius: 10px;
+	border: 3px solid #292929;
+}
