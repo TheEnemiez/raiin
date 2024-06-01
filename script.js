@@ -10,7 +10,7 @@ function getDiscount(value) {
 }
 
 function calculateSkyPrice() {
-    const baseSkyPrice = 2;
+    const baseSkyPrice = 5.00;
     const additionalSkies = parseInt(document.getElementById("additionalSkies").value) || 0;
     const recolorsSky = parseInt(document.getElementById("recolorsSky").value) || 0;
     const skyDiscount = getDiscount(document.getElementById("skyDiscount").value);
@@ -20,11 +20,13 @@ function calculateSkyPrice() {
         return;
     }
 
-    const additionalPrice = additionalSkies * 1.50;
-    const recolorPrice = recolorsSky * 1;
+    const additionalPrice = additionalSkies * (baseSkyPrice * 0.70);
+    const recolorPrice = recolorsSky * (baseSkyPrice * 0.30);
     const totalPrice = (baseSkyPrice + additionalPrice + recolorPrice) * (1 - skyDiscount);
 
-    const command = `/sky additional_skies:${additionalSkies} recolors:${recolorsSky}`;
+    let command = `/sky`;
+    if (additionalSkies > 0) command += ` additional_skies:${additionalSkies}`;
+    if (recolorsSky > 0) command += ` recolors:${recolorsSky}`;
 
     displayResult(`Sky Service Total Price: $${totalPrice.toFixed(2)}`, command);
 }
@@ -44,14 +46,13 @@ function calculateCloakPrice() {
         displayResult("Error: Additional cloaks and recolors cannot coexist.");
         return;
     }
-    const baseCloakPrice = resolutionPrice;
-    const additionalCloakPrice = additionalCloaks * resolutionPrice * 0.8;
-    const recolorPrice = recolors * resolutionPrice * 0.6;
-    const animationBasePrice = animations * resolutionPrice * 0.1;
-    const additionalAnimationPrice = animations * (additionalCloakPrice * 0.1);
-    const recolorAnimationPrice = animations * (recolorPrice * 0.1);
 
-    const totalPrice = (baseCloakPrice + additionalCloakPrice + recolorPrice + animationBasePrice + additionalAnimationPrice + recolorAnimationPrice + particlesEnabled) * (1 - cloakDiscount);
+    const baseCloakPrice = resolutionPrice;
+    const additionalCloakPrice = additionalCloaks * resolutionPrice * 0.9; // 90% of base price
+    const recolorPrice = recolors * resolutionPrice * 0.5; // 50% of base price
+    const animationPrice = animations * resolutionPrice * 0.2; // 20% of base price per frame
+
+    const totalPrice = (baseCloakPrice + additionalCloakPrice + recolorPrice + animationPrice + particlesEnabled) * (1 - cloakDiscount);
 
     let command = `/cloak resolution:${selectedResolution}`;
     if (additionalCloaks > 0) command += ` additional_cloaks:${additionalCloaks}`;
@@ -63,14 +64,15 @@ function calculateCloakPrice() {
 }
 
 function calculateThumbnailPrice() {
-    const baseThumbnailPrice = 2.00;
+    const baseThumbnailPrice = 5.00;
     const additionalThumbnails = parseInt(document.getElementById("additionalThumbnails").value) || 0;
     const thumbnailDiscount = getDiscount(document.getElementById("thumbnailDiscount").value);
 
-    const additionalPrice = additionalThumbnails * 1.50;
+    const additionalPrice = additionalThumbnails * (baseThumbnailPrice * 0.80);
     const totalPrice = (baseThumbnailPrice + additionalPrice) * (1 - thumbnailDiscount);
 
-    const command = `/thumbnail additional_thumbnails:${additionalThumbnails}`;
+    let command = `/thumbnail`;
+    if (additionalThumbnails > 0) command += ` additional_thumbnails:${additionalThumbnails}`;
 
     displayResult(`Thumbnail Service Total Price: $${totalPrice.toFixed(2)}`, command);
 }
@@ -114,6 +116,7 @@ function disableAdditionalIfRecolors(type) {
         document.getElementById('additionalCloaks').disabled = parseInt(document.getElementById('recolors').value) > 0;
     }
 }
+
 let timeoutId;
 
 function copyText() {
