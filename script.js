@@ -53,11 +53,14 @@ function calculateCloakPrice() {
 
     const totalPrice = (baseCloakPrice + additionalCloakPrice + recolorPrice + animationBasePrice + additionalAnimationPrice + recolorAnimationPrice + particlesEnabled) * (1 - cloakDiscount);
 
-    const command = `/cloak resolution:${selectedResolution} additional_cloaks:${additionalCloaks} recolors:${recolors} animations:${animations} particle_info:${particlesEnabled === 3 ? "Describe your particle" : ""}`;
+    let command = `/cloak resolution:${selectedResolution}`;
+    if (additionalCloaks > 0) command += ` additional_cloaks:${additionalCloaks}`;
+    if (recolors > 0) command += ` recolors:${recolors}`;
+    if (animations > 0) command += ` animations:${animations}`;
+    if (particlesEnabled === 3) command += ` particle_info:Describe your particle`;
 
     displayResult(`Cloak Service Total Price: $${totalPrice.toFixed(2)}`, command);
 }
-
 
 function calculateThumbnailPrice() {
     const baseThumbnailPrice = 2.00;
@@ -77,19 +80,18 @@ function displayResult(message, command) {
     var commandDiv = document.getElementById("commandDisplay");
     var copyButton = document.getElementById("copyButton");
 
-    resultDiv.innerText = message;  // Display the price message.
-    commandDiv.innerText = command;  // Store command in a separate div for copying.
+    resultDiv.innerText = message
+    commandDiv.innerText = command
 
-    // Only show the command and copy button if a command exists.
     if (command) {
         commandDiv.style.display = "block";
-        copyButton.style.display = "inline-block";  // Adjusted to 'inline-block' for better layout control.
+        copyButton.style.display = "inline-block"
     } else {
         commandDiv.style.display = "none";
         copyButton.style.display = "none";
     }
 
-    resultDiv.style.display = "block";  // Make sure the result is visible.
+    resultDiv.style.display = "block"
 }
 
 function copyCommandToClipboard() {
@@ -116,14 +118,8 @@ let timeoutId;
 
 function copyText() {
     const button = document.getElementById("copyButton");
-
-    // Clear any existing timeout to prevent overlaps
     clearTimeout(timeoutId);
-
-    // Set the button to the "Copied!" state
     button.textContent = "Copied!";
-
-    // Set a timeout to revert the button back to its original state
     timeoutId = setTimeout(() => {
         button.textContent = "Copy Command";
     }, 1000);
