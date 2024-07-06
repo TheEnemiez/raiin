@@ -5,6 +5,27 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family: "Minecraft";
+	src: url("MinecraftItalic.otf") format("opentype");
+	font-weight: normal;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: "Minecraft";
+	src: url("MinecraftBold.otf") format("opentype");
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Minecraft";
+	src: url("MinecraftBoldItalic.otf") format("opentype");
+	font-weight: bold;
+	font-style: italic;
+}
+
 body,
 h1,
 h2,
@@ -17,9 +38,10 @@ summary {
 	margin: 0;
 	padding: 0;
 }
+
 * {
 	max-width: 100vw; /* Ensure no element exceeds the viewport width */
-	font-family: "Minecraft", "Ariel", monospace, Arial, sans-serif;
+	font-family: "Minecraft", "Arial", monospace, Arial, sans-serif;
 }
 body {
 	background-color: #1a1a1a;
