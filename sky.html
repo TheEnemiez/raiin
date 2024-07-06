@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>RAIIN</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<div id="notification" class="notification hidden"></div>
+
+		<header>
+			<pre>
+      :::::::::      :::     ::::::::::: ::::::::::: ::::    ::: 
+     :+:    :+:   :+: :+:       :+:         :+:     :+:+:   :+:  
+    +:+    +:+  +:+   +:+      +:+         +:+     :+:+:+  +:+   
+   +#++:++#:  +#++:++#++:     +#+         +#+     +#+ +:+ +#+    
+  +#+    +#+ +#+     +#+     +#+         +#+     +#+  +#+#+#     
+ #+#    #+# #+#     #+#     #+#         #+#     #+#   #+#+#      
+###    ### ###     ### ########### ########### ###    ####       
+        </pre
+			>
+			<h1>Welcome to RAIIN</h1>
+		</header>
+		<nav>
+			<ul>
+				<li><a href="services.html">Services</a></li>
+				<li><a href="how-to-order.html">How to Order</a></li>
+				<li><a href="payment-information.html">Payment Information</a></li>
+				<li><a href="receive.html">Receive Your Order</a></li>
+				<li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+				<li><a href="contact-us.html">Contact Us</a></li>
+				<li><a href="prices.html">Price Calculator</a></li>
+			</ul>
+		</nav>
+		<nav>
+			<ul>
+				<li><a href="cloak.html">Cloak Form</a></li>
+				<li><a href="sky.html">Sky Form</a></li>
+				<li><a href="thumbnail.html">Thumbnail Form</a></li>
+			</ul>
+		</nav>
+
+		<main>
+			<form id="skyForm" class="form-grid">
+				<h2>Sky Form</h2>
+				<div class="form-row">
+					<label for="additionalSkies">Additional Skies:</label>
+					<input type="number" id="additionalSkies" name="additionalSkies" min="0" max="10" oninput="updateSkySelect()" />
+				</div>
+				<div class="form-row">
+					<label for="recolors">Sky Recolors:</label>
+					<input type="number" id="recolors" name="recoloredSkies" min="0" max="10" oninput="updateSkySelect()" />
+				</div>
+				<div id="skySelectContainer" class="form-row">
+					<label for="skySelect">Select Sky</label>
+					<select id="skySelect" name="skySelect" class="form-control">
+						<option value="0">Main Sky</option>
+					</select>
+				</div>
+				<div id="skies">
+					<div class="sky-group" id="sky0">
+						<h3>Main Sky</h3>
+						<div class="form-group">
+							<label for="description0">Description</label>
+							<textarea id="description0" name="description0" class="form-control auto-expand"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<label for="skyDiscount">Discount (% or Code):</label>
+					<textarea type="text" id="skyDiscount" name="skyDiscount" class="form-control" oninput="validateDiscount(this)"></textarea>
+				</div>
+				<div class="form-row">
+					<button type="button" onclick="calculatePriceAndExportJSON()">Calculate Price & Export JSON</button>
+					<button type="button" onclick="showImportPopup()">Import</button>
+					<input type="file" id="importFile" style="display: none" accept=".json" onchange="handleFileImport(event)" />
+					<button type="button" id="copyJsonButton" class="hidden" onclick="copyJson()">Copy JSON</button>
+				</div>
+
+				<div id="jsonOutputContainer" class="form-row hidden">
+					<h3>JSON Output:</h3>
+					<div id="jsonDisplay" class="json-display"></div>
+					<input type="hidden" id="jsonOutputHidden" />
+				</div>
+				<div id="result" class="hidden"></div>
+			</form>
+		</main>
+
+		<footer>
+			<div class="footer-content">
+				<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR">RAIIN Discord</a> | @TheEnemiez</p>
+				<ul class="social-links">
+					<li><a href="https://www.youtube.com/@TheEnemiez">TheEnemiez YT</a><br /></li>
+					<li><a href="https://www.youtube.com/@Cookiehh">Cookiehh YT</a><br /></li>
+				</ul>
+				<p>© 2024 RAIIN. All rights reserved.</p>
+			</div>
+		</footer>
+		<script>
+			function handleFileImport(event) {
+				const file = event.target.files[0];
+				if (file && file.type === "application/json") {
+					const reader = new FileReader();
+					reader.onload = (e) => {
+						try {
+							const jsonString = e.target.result;
+							importJson(jsonString);
+						} catch (error) {
+							showNotification("Error importing JSON: " + error.message, `7F2B2B`, "FF5555");
+						}
+					};
+					reader.onerror = () => {
+						showNotification("Error reading file", `7F2B2B`, "FF5555");
+					};
+					reader.readAsText(file);
+				} else {
+					showNotification("Please select a valid JSON file", `7F2B2B`, "FF5555");
+				}
+			}
+
+			function showNotification(message, bgColor = "000000", textColor = "ffffff") {
+				const notification = document.getElementById("notification");
+				notification.textContent = message;
+				notification.style.backgroundColor = `#${bgColor}`;
+				notification.style.color = `#${textColor}`;
+
+				// Prevent multiple rapid notifications from causing flickering
+				if (notification.hideTimeout) {
+					clearTimeout(notification.hideTimeout); // Clear existing timeout
+				}
+
+				notification.classList.remove("hidden");
+				notification.classList.add("visible");
+
+				// Hide the notification after 3 seconds using requestAnimationFrame for smoother animation
+				notification.hideTimeout = setTimeout(() => {
+					requestAnimationFrame(() => {
+						notification.classList.remove("visible");
+						notification.classList.add("hidden");
+					});
+				}, 3000);
+			}
+
+			function showDetailedPopup(details) {
+				// Remove any existing popup and overlay before creating new ones
+				document.querySelectorAll(".detailed-popup, .blur-overlay").forEach((element) => element.remove());
+
+				const overlay = document.createElement("div");
+				overlay.classList.add("blur-overlay");
+				document.body.appendChild(overlay);
+
+				const detailedPopup = document.createElement("div");
+				detailedPopup.classList.add("detailed-popup");
+
+				const content = document.createElement("div");
+				content.classList.add("content");
+				content.innerHTML = `<p>${details.join("<br>")}</p>`;
+
+				const closeButton = document.createElement("button");
+				closeButton.textContent = "Close";
+				closeButton.onclick = () => {
+					detailedPopup.remove();
+					overlay.remove();
+					hideNotification();
+					document.body.classList.remove("no-scroll"); // Enable scrolling
+				};
+
+				content.appendChild(closeButton);
+				detailedPopup.appendChild(content);
+
+				document.body.appendChild(detailedPopup);
+				document.body.classList.add("no-scroll"); // Disable scrolling
+			}
+
+			function hideNotification() {
+				const notification = document.getElementById("notification");
+				notification.classList.remove("visible");
+				notification.classList.add("hidden");
+			}
+
+			function updatePrice(type, index) {
+				// Only handling description for sky
+			}
+
+			function getSkyType(index) {
+				const additionalSkiesCount = parseInt(document.getElementById("additionalSkies").value, 10) || 0;
+				if (index === 0) return "main";
+				if (index <= additionalSkiesCount) return "additional";
+				return "recolor";
+			}
+
+			function getSkyFormData() {
+				const formData = new FormData(document.getElementById("skyForm"));
+				const data = {
+					additionalSkies: formData.get("additionalSkies"),
+					recoloredSkies: formData.get("recoloredSkies"),
+					skies: [],
+				};
+
+				const additionalSkiesCount = parseInt(data.additionalSkies, 10) || 0;
+				const recoloredSkiesCount = parseInt(data.recoloredSkies, 10) || 0;
+				const skyCount = additionalSkiesCount + recoloredSkiesCount + 1;
+
+				for (let i = 0; i < skyCount; i++) {
+					const sky = {
+						type: i === 0 ? "main" : i <= additionalSkiesCount ? "additional" : "recolor",
+						description: formData.get(`description${i}`),
+					};
+
+					data.skies.push(sky);
+				}
+
+				return data;
+			}
+
+			function updateSkySelect() {
+				const additionalSkies = document.getElementById("additionalSkies");
+				const recolors = document.getElementById("recolors");
+
+				// Ensure the value does not exceed 10
+				additionalSkies.value = Math.min(additionalSkies.value, 10);
+				recolors.value = Math.min(recolors.value, 10);
+
+				const additionalSkiesCount = parseInt(additionalSkies.value, 10) || 0;
+				const recolorsCount = parseInt(recolors.value, 10) || 0;
+				const totalSkiesCount = additionalSkiesCount + recolorsCount + 1;
+
+				const skiesContainer = document.getElementById("skies");
+				const skySelect = document.getElementById("skySelect");
+
+				// Save existing form data
+				const existingData = getSkyFormData();
+
+				// Reset the dropdown and skies container
+				skySelect.innerHTML = '<option value="0">Main Sky</option>';
+				skiesContainer.innerHTML = createSkyGroup("Main Sky", 0);
+
+				// Create additional and recolored skies
+				for (let i = 1; i < totalSkiesCount; i++) {
+					const isAdditional = i <= additionalSkiesCount;
+					const title = isAdditional ? `Additional Sky ${i}` : `Recolored Sky ${i - additionalSkiesCount}`;
+					skySelect.innerHTML += `<option value="${i}">${title}</option>`;
+					skiesContainer.innerHTML += createSkyGroup(title, i);
+				}
+
+				// Restore form data
+				setSkyFormData(existingData);
+
+				// Show the first sky group
+				document.getElementById("sky0").style.display = "block";
+
+				// Update all prices
+				for (let i = 0; i < totalSkiesCount; i++) {
+					updatePrice("description", i);
+				}
+			}
+
+			function createSkyGroup(title, index) {
+				return `
+			 <div class="sky-group" id="sky${index}" style="display: none;">
+			     <h3>${title}</h3>
+			     <div class="form-group">
+			         <label for="description${index}">Description</label>
+			         <textarea id="description${index}" name="description${index}" class="form-control auto-expand"></textarea>
+			     </div>
+			 </div>
+			 `;
+			}
+
+			function calculateSkyPrice() {
+				const formData = getSkyFormData(); // Assuming getSkyFormData() retrieves form data
+				if (!formData) return 0;
+
+				let totalPrice = 0;
+
+				formData.skies.forEach((sky, index) => {
+					const basePrice = getSkyBasePrice(sky, index);
+					totalPrice += basePrice;
+				});
+
+				const discount = parseFloat(document.getElementById("skyDiscount").value) || 0;
+				const discountedPrice = totalPrice * (1 - discount / 100);
+
+				return discountedPrice.toFixed(2);
+			}
+
+			function getSkyBasePrice(sky, index) {
+				let basePrice = 3; // Default base price for sky
+				const isMainSky = index === 0;
+				const isAdditionalSky = sky.type === "additional";
+				const isRecoloredSky = sky.type === "recolor";
+
+				if (isMainSky) basePrice = 3;
+				if (isAdditionalSky) basePrice = 2;
+				if (isRecoloredSky) basePrice = 1.5;
+
+				return basePrice;
+			}
+
+			function calculatePriceAndExportJSON() {
+				clearErrorMessages();
+
+				let formData;
+				let priceBreakdown = [];
+				let totalPrice = 0;
+				let discountedPrice = 0;
+
+				if (!validateForm()) {
+					return;
+				}
+
+				formData = getSkyFormData();
+				if (!formData) {
+					return;
+				}
+
+				formData.skies.forEach((sky, index) => {
+					const basePrice = getSkyBasePrice(sky, index);
+					let skyPrice = basePrice;
+					let details = `Sky ${index + 1} (${sky.type}): ${basePrice.toFixed(2)}€`;
+
+					priceBreakdown.push(details);
+					totalPrice += skyPrice;
+				});
+
+				const discountValue = document.getElementById("skyDiscount").value.trim();
+				const discount = parseFloat(discountValue);
+
+				if (isNaN(discount) && discountValue !== "") {
+					formData.code = discountValue;
+					priceBreakdown.push(`Discount Code Applied: ${discountValue}`);
+				} else if (!isNaN(discount) && discount > 0) {
+					priceBreakdown.push(`Discount Applied: ${discount}%`);
+					totalPrice *= 1 - discount / 100;
+				}
+
+				discountedPrice = totalPrice.toFixed(2);
+				showNotification(`Total Sky Price: ${discountedPrice}€`, `2C7F2C`, `55ff55`);
+
+				let summary = priceBreakdown.join("<br>");
+				const formattedJsonString = JSON.stringify(formData, null, 2);
+				const compactJsonString = JSON.stringify(formData);
+
+				const lines = formattedJsonString.split("\n");
+				const maxLines = 10;
+				const visibleLines = lines.slice(0, maxLines).join("\n");
+				const isOverflow = lines.length > maxLines;
+
+				const jsonDisplay = document.getElementById("jsonDisplay");
+				jsonDisplay.innerHTML = visibleLines + (isOverflow ? "\n..." : "");
+
+				document.getElementById("jsonOutputHidden").value = compactJsonString;
+
+				document.getElementById("copyJsonButton").classList.remove("hidden");
+				document.getElementById("jsonOutputContainer").classList.remove("hidden");
+
+				const result = document.getElementById("result");
+				result.innerHTML = summary + `<h3>Total Price: ${discountedPrice}€</h3>`;
+				result.classList.remove("hidden");
+			}
+
+			function displayJsonFormatted(jsonString) {
+				const lines = jsonString.split("\n");
+				const maxLines = 10;
+				const visibleLines = lines.slice(0, maxLines).join("\n");
+				const isOverflow = lines.length > maxLines;
+
+				const jsonDisplay = document.getElementById("jsonDisplay");
+				jsonDisplay.innerHTML = visibleLines + (isOverflow ? "\n..." : "");
+			}
+
+			function copyJson() {
+				const jsonOutputHidden = document.getElementById("jsonOutputHidden");
+
+				// Copy compact JSON to clipboard
+				navigator.clipboard
+					.writeText(jsonOutputHidden.value)
+					.then(() => {
+						showNotification("JSON copied to clipboard", `2C7F2C`, `55ff55`);
+
+						// Clear all cache after copying JSON
+						localStorage.clear();
+
+						// Clear the form data
+						document.getElementById("skyForm").reset();
+						updateSkySelect();
+
+						// Hide JSON output container and copy button
+						const jsonOutputContainer = document.getElementById("jsonOutputContainer");
+						const copyJsonButton = document.getElementById("copyJsonButton");
+						const jsonDisplay = document.getElementById("jsonDisplay");
+
+						jsonOutputContainer.classList.add("hidden");
+						copyJsonButton.classList.add("hidden");
+
+						// Clear JSON display and hidden input
+						jsonDisplay.innerHTML = "";
+						jsonOutputHidden.value = "";
+
+						// Clear the result summary
+						const result = document.getElementById("result");
+						result.classList.add("hidden");
+						result.innerHTML = "";
+
+						// Clear any previous error messages
+						clearErrorMessages();
+					})
+					.catch((err) => {
+						showNotification("Failed to copy JSON", `7F2B2B`, `ff5555`);
+						console.error("Could not copy text: ", err);
+					});
+			}
+
+			function showImportPopup() {
+				const createElementWithClass = (tag, ...classNames) => {
+					const element = document.createElement(tag);
+					classNames.forEach((className) => element.classList.add(className));
+					return element;
+				};
+
+				const overlay = createElementWithClass("div", "blur-overlay");
+				const popup = createElementWithClass("div", "detailed-popup");
+				const content = createElementWithClass("div", "content");
+
+				const textarea = createElementWithClass("textarea", "form-control", "auto-expand", "import-textarea");
+				textarea.rows = 10;
+				textarea.placeholder = "Paste your JSON here...";
+
+				const importButton = createElementWithClass("button");
+				importButton.textContent = "Import JSON";
+				importButton.onclick = () => {
+					importJson(textarea.value);
+					overlay.remove();
+					popup.remove();
+					document.body.classList.remove("no-scroll");
+				};
+
+				const closeButton = createElementWithClass("button");
+				closeButton.textContent = "Close";
+				closeButton.onclick = () => {
+					overlay.remove();
+					popup.remove();
+					document.body.classList.remove("no-scroll");
+				};
+
+				content.appendChild(textarea);
+				content.appendChild(importButton);
+				content.appendChild(closeButton);
+				popup.appendChild(content);
+
+				document.body.appendChild(overlay);
+				document.body.appendChild(popup);
+				document.body.classList.add("no-scroll");
+			}
+
+			function clearErrorMessages() {
+				document.querySelectorAll(".detailed-popup, .blur-overlay").forEach((element) => element.remove());
+			}
+
+			function importJson(jsonString) {
+				try {
+					const jsonData = JSON.parse(jsonString);
+					setSkyFormData(jsonData);
+					showNotification("JSON imported successfully", `2C7F2C`, `55ff55`);
+
+					// Clear the JSON output and result summary after importing
+					const jsonOutputContainer = document.getElementById("jsonOutputContainer");
+					const copyJsonButton = document.getElementById("copyJsonButton");
+					const jsonDisplay = document.getElementById("jsonDisplay");
+					const jsonOutputHidden = document.getElementById("jsonOutputHidden");
+					const result = document.getElementById("result");
+
+					jsonOutputContainer.classList.add("hidden");
+					copyJsonButton.classList.add("hidden");
+					jsonDisplay.innerHTML = "";
+					jsonOutputHidden.value = "";
+					result.classList.add("hidden");
+					result.innerHTML = "";
+
+					// Clear any previous error messages
+					clearErrorMessages();
+				} catch (error) {
+					showNotification("Invalid JSON format", `7F2B2B`, `ff5555`);
+				}
+			}
+			function validateDiscount(input) {
+				const discountValue = input.value.trim();
+				console.log("Validating discount value:", discountValue); // Log the discount value being validated
+				const discountPattern = /^(?!.*\s)(\d{1,2}(\.\d{1})?|100|[A-Za-z0-9]{6})$/;
+
+				if (discountValue === "") {
+					console.log("Discount value is empty, setting to blank."); // Log the case when the input is empty
+					input.value = ""; // Allow blank input
+				} else if (!discountPattern.test(discountValue)) {
+					console.log("Discount value is invalid:", discountValue); // Log the invalid discount value
+					input.value = discountValue.slice(0, -1); // Remove the last character
+				}
+			}
+
+			// Updated validateForm function
+			function validateForm() {
+				let valid = true;
+				const messages = [];
+
+				document.querySelectorAll(".sky-group").forEach((group) => {
+					const index = group.id.replace("sky", "");
+					const description = document.getElementById(`description${index}`);
+
+					if (!description.value.trim()) {
+						messages.push(`${group.querySelector("h3").textContent} description is required.`);
+						valid = false;
+					}
+				});
+
+				const discountInput = document.getElementById("skyDiscount").value.trim();
+				if (discountInput !== "") {
+					const discountPattern = /^([0-9]{1,2}(\.[0-9]{1})?|100|[A-Za-z0-9]{6})$/;
+					if (!discountPattern.test(discountInput)) {
+						messages.push("Invalid discount. Enter a number between 0 and 100 or a valid code.");
+						valid = false;
+					}
+				}
+
+				if (!valid) {
+					showNotification("There are errors in the form. Click for details.", `7F2B2B`, `ff5555`);
+					document.getElementById("notification").onclick = () => showDetailedPopup(messages);
+				}
+
+				return valid;
+			}
+
+			function setSkyFormData(data) {
+				try {
+					const setElementValue = (id, value, defaultValue = "") => {
+						const element = document.getElementById(id);
+						if (element) element.value = value || defaultValue;
+					};
+
+					// Sky part
+					if (data.additionalSkies !== undefined) {
+						setElementValue("additionalSkies", data.additionalSkies);
+						setElementValue("recolors", data.recoloredSkies);
+
+						const additionalSkiesCount = parseInt(data.additionalSkies, 10) || 0;
+						const recolorsCount = parseInt(data.recoloredSkies, 10) || 0;
+						const totalSkiesCount = additionalSkiesCount + recolorsCount + 1;
+
+						const skiesContainer = document.getElementById("skies");
+						const skySelect = document.getElementById("skySelect");
+
+						// Clear existing skies and dropdown options
+						skySelect.innerHTML = '<option value="0">Main Sky</option>';
+						skiesContainer.innerHTML = createSkyGroup("Main Sky", 0);
+
+						// Create additional and recolored skies
+						for (let i = 1; i <= additionalSkiesCount; i++) {
+							skySelect.innerHTML += `<option value="${i}">Additional Sky ${i}</option>`;
+							skiesContainer.innerHTML += createSkyGroup(`Additional Sky ${i}`, i);
+						}
+
+						for (let i = 1; i <= recolorsCount; i++) {
+							const skyIndex = additionalSkiesCount + i;
+							skySelect.innerHTML += `<option value="${skyIndex}">Recolored Sky ${i}</option>`;
+							skiesContainer.innerHTML += createSkyGroup(`Recolored Sky ${i}`, skyIndex);
+						}
+
+						// Set form data for each sky if data.skies is defined
+						if (data.skies) {
+							data.skies.forEach((sky, index) => {
+								setElementValue(`description${index}`, sky.description, "");
+							});
+
+							// Ensure the first sky group is visible
+							document.getElementById("sky0").style.display = "block";
+						}
+					}
+				} catch (error) {
+					console.error("Error loading form data:", error);
+					showNotification("Error loading imported data.", `7F2B2B`, `ff5555`);
+				}
+			}
+
+			function autoExpand(field) {
+				field.style.height = "inherit";
+
+				// Calculate the new height
+				const computed = window.getComputedStyle(field);
+				const height = parseInt(computed.getPropertyValue("border-top-width"), 10) + parseInt(computed.getPropertyValue("padding-top"), 10) + field.scrollHeight + parseInt(computed.getPropertyValue("padding-bottom"), 10) + parseInt(computed.getPropertyValue("border-bottom-width"), 10);
+
+				// Apply the calculated height to the textarea
+				field.style.height = `${height - 25}px`;
+			}
+
+			function saveProgress() {
+				const formData = getSkyFormData();
+				localStorage.setItem("skyFormData", JSON.stringify(formData));
+			}
+
+			function loadProgress() {
+				const savedData = localStorage.getItem("skyFormData");
+				let dataToLoad = savedData ? JSON.parse(savedData) : {};
+				setSkyFormData(dataToLoad);
+			}
+
+			document.addEventListener("DOMContentLoaded", () => {
+				document.getElementById("additionalSkies").addEventListener("input", updateSkySelect);
+				document.getElementById("recolors").addEventListener("input", updateSkySelect);
+
+				document.getElementById("skySelect").addEventListener("change", (event) => {
+					const selectedSky = event.target.value;
+					document.querySelectorAll(".sky-group").forEach((group) => {
+						group.style.display = group.id === `sky${selectedSky}` ? "block" : "none";
+					});
+					updatePrice("description", selectedSky);
+				});
+
+				document.addEventListener("input", (event) => {
+					if (event.target.tagName.toLowerCase() === "textarea" && event.target.classList.contains("auto-expand")) {
+						autoExpand(event.target);
+					}
+					if (event.target.id === "skyDiscount") {
+						validateDiscount(event.target);
+					}
+				});
+
+				// Load progress and initialize sky select
+				loadProgress();
+				updateSkySelect();
+
+				setInterval(saveProgress, 500);
+			});
+		</script>
+	</body>
+</html>
