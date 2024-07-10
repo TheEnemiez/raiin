@@ -115,11 +115,12 @@
 
 		<footer>
 			<div class="footer-content">
-				<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR">RAIIN Discord</a> | @TheEnemiez</p>
+				<p>Contact us: <a href="https:</p>
 				<ul class="social-links">
-					<li><a href="https://www.youtube.com/@TheEnemiez">TheEnemiez YT</a><br /></li>
-					<li><a href="https://www.youtube.com/@Cookiehh">Cookiehh YT</a><br /></li>
+					<li><a href="https:</li>
+					<li><a href="https:</li>
 				</ul>
+
 				<p>© 2024 RAIIN. All rights reserved.</p>
 			</div>
 		</footer>
@@ -131,6 +132,13 @@
 					reader.onload = (e) => {
 						try {
 							const jsonString = e.target.result;
+							const jsonData = JSON.parse(jsonString);
+
+							if (jsonData.additionalCloaks > 10 || jsonData.recoloredCloaks > 10) {
+								showNotification("Error: The number of additional or recolored cloaks exceeds the maximum allowed (10).", `7F2B2B`, "FF5555");
+								return;
+							}
+
 							importJson(jsonString);
 						} catch (error) {
 							showNotification("Error importing JSON: " + error.message, `7F2B2B`, "FF5555");
@@ -151,15 +159,13 @@
 				notification.style.backgroundColor = `#${bgColor}`;
 				notification.style.color = `#${textColor}`;
 
-				// Prevent multiple rapid notifications from causing flickering
 				if (notification.hideTimeout) {
-					clearTimeout(notification.hideTimeout); // Clear existing timeout
+					clearTimeout(notification.hideTimeout);
 				}
 
 				notification.classList.remove("hidden");
 				notification.classList.add("visible");
 
-				// Hide the notification after 3 seconds using requestAnimationFrame for smoother animation
 				notification.hideTimeout = setTimeout(() => {
 					requestAnimationFrame(() => {
 						notification.classList.remove("visible");
@@ -169,7 +175,6 @@
 			}
 
 			function showDetailedPopup(details) {
-				// Remove any existing popup and overlay before creating new ones
 				document.querySelectorAll(".detailed-popup, .blur-overlay").forEach((element) => element.remove());
 
 				const overlay = document.createElement("div");
@@ -189,14 +194,14 @@
 					detailedPopup.remove();
 					overlay.remove();
 					hideNotification();
-					document.body.classList.remove("no-scroll"); // Enable scrolling
+					document.body.classList.remove("no-scroll");
 				};
 
 				content.appendChild(closeButton);
 				detailedPopup.appendChild(content);
 
 				document.body.appendChild(detailedPopup);
-				document.body.classList.add("no-scroll"); // Disable scrolling
+				document.body.classList.add("no-scroll");
 			}
 
 			function hideNotification() {
@@ -214,12 +219,12 @@
 
 				let resolutionPrice = basePrice;
 				if (isAdditional) {
-					resolutionPrice -= 1; // Discount for additional cloaks
+					resolutionPrice -= 1;
 				} else if (isRecolor) {
-					resolutionPrice = 2; // Set price for recolored cloaks
+					resolutionPrice = 2;
 				}
 
-				let animationPricePerFrame = 0.5; // Default price for main cloak
+				let animationPricePerFrame = 0.5;
 				if (isAdditional) {
 					switch (resolutionElement.value) {
 						case "10x16 (Global & Client)":
@@ -271,7 +276,7 @@
 						const framesElement = document.getElementById(`animationFrames${index}`);
 						let frames = parseInt(framesElement.value) || 0;
 						if (frames > 50) {
-							framesElement.value = 50; // Limit frames to 50
+							framesElement.value = 50;
 							frames = 50;
 						}
 						const animationPrice = frames > 0 ? (frames * animationPricePerFrame).toFixed(2) : `(${animationPricePerFrame.toFixed(2)}€/frame)`;
@@ -315,7 +320,7 @@
 						cloak.particlesDesc = formData.get(`particlesDesc${i}`);
 					}
 					if (cloak.animation && animationCheckbox) {
-						const animationFrames = Math.min(parseInt(formData.get(`animationFrames${i}`), 10), 50); // Limit to 50
+						const animationFrames = Math.min(parseInt(formData.get(`animationFrames${i}`), 10), 50);
 						cloak.animationFrames = animationFrames;
 						cloak.animationDesc = formData.get(`animationDesc${i}`);
 					}
@@ -330,7 +335,6 @@
 				const additionalCloaks = document.getElementById("additionalCloaks");
 				const recolors = document.getElementById("recolors");
 
-				// Ensure the value does not exceed 10
 				additionalCloaks.value = Math.min(additionalCloaks.value, 10);
 				recolors.value = Math.min(recolors.value, 10);
 
@@ -341,14 +345,11 @@
 				const cloaksContainer = document.getElementById("cloaks");
 				const cloakSelect = document.getElementById("cloakSelect");
 
-				// Save existing form data
 				const existingData = getFormData();
 
-				// Reset the dropdown and cloaks container
 				cloakSelect.innerHTML = '<option value="0">Main Cloak</option>';
 				cloaksContainer.innerHTML = createCloakGroup("Main Cloak", 0);
 
-				// Create additional and recolored cloaks
 				for (let i = 1; i < totalCloaksCount; i++) {
 					const isAdditional = i <= additionalCloaksCount;
 					const title = isAdditional ? `Additional Cloak ${i}` : `Recolored Cloak ${i - additionalCloaksCount}`;
@@ -356,13 +357,10 @@
 					cloaksContainer.innerHTML += createCloakGroup(title, i);
 				}
 
-				// Restore form data
 				setFormData(existingData);
 
-				// Show the first cloak group
 				document.getElementById("cloak0").style.display = "block";
 
-				// Update all prices
 				for (let i = 0; i < totalCloaksCount; i++) {
 					updatePrice("resolution", i);
 					updatePrice("particles", i);
@@ -398,7 +396,7 @@
 						cloak.particlesDesc = formData.get(`particlesDesc${i}`);
 					}
 					if (cloak.animation && animationCheckbox) {
-						const animationFrames = Math.min(parseInt(formData.get(`animationFrames${i}`), 10), 50); // Limit to 50
+						const animationFrames = Math.min(parseInt(formData.get(`animationFrames${i}`), 10), 50);
 						cloak.animationFrames = animationFrames;
 						cloak.animationDesc = formData.get(`animationDesc${i}`);
 					}
@@ -453,7 +451,7 @@
 			}
 
 			function calculateCloakPrice() {
-				const formData = getFormData(); // Assuming getFormData() retrieves form data
+				const formData = getFormData();
 				if (!formData) return 0;
 
 				let totalPrice = 0;
@@ -613,20 +611,16 @@
 			function copyJson() {
 				const jsonOutputHidden = document.getElementById("jsonOutputHidden");
 
-				// Copy compact JSON to clipboard
 				navigator.clipboard
 					.writeText(jsonOutputHidden.value)
 					.then(() => {
 						showNotification("JSON copied to clipboard", `2C7F2C`, `55ff55`);
 
-						// Clear all cache after copying JSON
 						localStorage.clear();
 
-						// Clear the form data
 						document.getElementById("cloakForm").reset();
 						updateCloakSelect();
 
-						// Hide JSON output container and copy button
 						const jsonOutputContainer = document.getElementById("jsonOutputContainer");
 						const copyJsonButton = document.getElementById("copyJsonButton");
 						const jsonDisplay = document.getElementById("jsonDisplay");
@@ -634,16 +628,13 @@
 						jsonOutputContainer.classList.add("hidden");
 						copyJsonButton.classList.add("hidden");
 
-						// Clear JSON display and hidden input
 						jsonDisplay.innerHTML = "";
 						jsonOutputHidden.value = "";
 
-						// Clear the result summary
 						const result = document.getElementById("result");
 						result.classList.add("hidden");
 						result.innerHTML = "";
 
-						// Clear any previous error messages
 						clearErrorMessages();
 					})
 					.catch((err) => {
@@ -704,7 +695,6 @@
 					setFormData(jsonData);
 					showNotification("JSON imported successfully", `2C7F2C`, `55ff55`);
 
-					// Clear the JSON output and result summary after importing
 					const jsonOutputContainer = document.getElementById("jsonOutputContainer");
 					const copyJsonButton = document.getElementById("copyJsonButton");
 					const jsonDisplay = document.getElementById("jsonDisplay");
@@ -718,7 +708,6 @@
 					result.classList.add("hidden");
 					result.innerHTML = "";
 
-					// Clear any previous error messages
 					clearErrorMessages();
 				} catch (error) {
 					showNotification("Invalid JSON format", `7F2B2B`, `ff5555`);
@@ -726,19 +715,18 @@
 			}
 			function validateDiscount(input) {
 				const discountValue = input.value.trim();
-				console.log("Validating discount value:", discountValue); // Log the discount value being validated
+				console.log("Validating discount value:", discountValue);
 				const discountPattern = /^(?!.*\s)(\d{1,2}(\.\d{1})?|100|[A-Za-z0-9]{6})$/;
 
 				if (discountValue === "") {
-					console.log("Discount value is empty, setting to blank."); // Log the case when the input is empty
-					input.value = ""; // Allow blank input
+					console.log("Discount value is empty, setting to blank.");
+					input.value = "";
 				} else if (!discountPattern.test(discountValue)) {
-					console.log("Discount value is invalid:", discountValue); // Log the invalid discount value
-					input.value = discountValue.slice(0, -1); // Remove the last character
+					console.log("Discount value is invalid:", discountValue);
+					input.value = discountValue.slice(0, -1);
 				}
 			}
 
-			// Updated validateForm function
 			function validateForm() {
 				let valid = true;
 				const messages = [];
@@ -813,7 +801,6 @@
 						if (element) element.style.display = display ? "block" : "none";
 					};
 
-					// Cloak part
 					if (data.additionalCloaks !== undefined) {
 						setElementValue("additionalCloaks", data.additionalCloaks);
 						setElementValue("recolors", data.recoloredCloaks);
@@ -825,11 +812,9 @@
 						const cloaksContainer = document.getElementById("cloaks");
 						const cloakSelect = document.getElementById("cloakSelect");
 
-						// Clear existing cloaks and dropdown options
 						cloakSelect.innerHTML = '<option value="0">Main Cloak</option>';
 						cloaksContainer.innerHTML = createCloakGroup("Main Cloak", 0);
 
-						// Create additional and recolored cloaks
 						for (let i = 1; i <= additionalCloaksCount; i++) {
 							cloakSelect.innerHTML += `<option value="${i}">Additional Cloak ${i}</option>`;
 							cloaksContainer.innerHTML += createCloakGroup(`Additional Cloak ${i}`, i);
@@ -841,7 +826,6 @@
 							cloaksContainer.innerHTML += createCloakGroup(`Recolored Cloak ${i}`, cloakIndex);
 						}
 
-						// Set form data for each cloak if data.cloaks is defined
 						if (data.cloaks) {
 							data.cloaks.forEach((cloak, index) => {
 								setElementValue(`description${index}`, cloak.description, "");
@@ -855,10 +839,8 @@
 								setElementDisplay(`animationDescription${index}`, cloak.animation);
 							});
 
-							// Ensure the first cloak group is visible
 							document.getElementById("cloak0").style.display = "block";
 
-							// Update prices
 							data.cloaks.forEach((_, index) => {
 								updatePrice("resolution", index);
 								updatePrice("particles", index);
@@ -875,11 +857,9 @@
 			function autoExpand(field) {
 				field.style.height = "inherit";
 
-				// Calculate the new height
 				const computed = window.getComputedStyle(field);
 				const height = parseInt(computed.getPropertyValue("border-top-width"), 10) + parseInt(computed.getPropertyValue("padding-top"), 10) + field.scrollHeight + parseInt(computed.getPropertyValue("padding-bottom"), 10) + parseInt(computed.getPropertyValue("border-bottom-width"), 10);
 
-				// Apply the calculated height to the textarea
 				field.style.height = `${height - 25}px`;
 			}
 
@@ -891,9 +871,9 @@
 			function validateFrameCount(input) {
 				const frameCount = parseInt(input.value, 10);
 				if (isNaN(frameCount) || frameCount < 1) {
-					input.value = 1; // Set to minimum 1
+					input.value = 1;
 				} else if (frameCount > 50) {
-					input.value = 50; // Set to maximum 50
+					input.value = 50;
 				}
 			}
 
@@ -940,7 +920,6 @@
 					}
 				});
 
-				// Load progress and initialize cloak select
 				loadProgress();
 				updateCloakSelect();
 
