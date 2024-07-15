@@ -130,13 +130,6 @@
 					reader.onload = (e) => {
 						try {
 							const jsonString = e.target.result;
-							const jsonData = JSON.parse(jsonString);
-
-							if (jsonData.additionalCloaks > 10 || jsonData.recoloredCloaks > 10) {
-								showNotification("Error: The number of additional or recolored cloaks exceeds the maximum allowed (10).", `7F2B2B`, "FF5555");
-								return;
-							}
-
 							importJson(jsonString);
 						} catch (error) {
 							showNotification("Error importing JSON: " + error.message, `7F2B2B`, "FF5555");
@@ -343,7 +336,7 @@
 				const cloaksContainer = document.getElementById("cloaks");
 				const cloakSelect = document.getElementById("cloakSelect");
 
-				const existingData = getFormData();
+				const existingData = getCloakFormData();
 
 				cloakSelect.innerHTML = '<option value="0">Main Cloak</option>';
 				cloaksContainer.innerHTML = createCloakGroup("Main Cloak", 0);
@@ -412,40 +405,40 @@
 
 			function createCloakGroup(title, index) {
 				return `
-			 <div class="cloak-group" id="cloak${index}" style="display: none;">
-			     <h3>${title}</h3>
-			     <div class="form-group">
-			         <label for="description${index}">Description</label>
-			         <textarea id="description${index}" name="description${index}" class="form-control auto-expand"></textarea>
-			     </div>
-			     <div class="form-group">
-			         <label for="resolution${index}">Resolution: <span id="resolutionPrice${index}">5.00€</span></label>
-			         <select id="resolution${index}" name="resolution${index}" onchange="updatePrice('resolution', ${index})">
-			             <option value="10x16 (Global & Client)" data-price="5.00">10x16 (Global & Client)</option>
-			             <option value="20x32 (Client)" data-price="7.00">20x32 (Client)</option>
-			             <option value="40x64 (Client)" data-price="10.00">40x64 (Client)</option>
-			         </select>
-			     </div>
-			     <div class="form-check">
-			         <input type="checkbox" id="particles${index}" name="particles${index}" class="form-check-input" onchange="updatePrice('particles', ${index})">
-			         <label for="particles${index}" class="form-check-label">Particles: <span id="particlesPrice${index}">3.00€</span></label>
-			     </div>
-			     <div class="form-group" id="particlesDescription${index}" style="display: none;">
-			         <label for="particlesDesc${index}">Particles Description</label>
-			         <textarea id="particlesDesc${index}" name="particlesDesc${index}" class="form-control auto-expand"></textarea>
-			     </div>
-			     <div class="form-check">
-			         <input type="checkbox" id="animation${index}" name="animation${index}" class="form-check-input" onchange="updatePrice('animation', ${index})">
-			         <label for="animation${index}" class="form-check-label">Animation (Frames): <span id="animationPrice${index}">0.50€/frame</span></label>
-			     </div>
-			     <div class="form-group" id="animationDescription${index}" style="display: none;">
-			         <label for="animationFrames${index}">Number of Frames</label>
-			         <input type="number" id="animationFrames${index}" name="animationFrames${index}" min="0" max="50" class="form-control" oninput="updatePrice('animation', ${index})">
-			         <label for="animationDesc${index}">Animation Description</label>
-			         <textarea id="animationDesc${index}" name="animationDesc${index}" class="form-control auto-expand"></textarea>
-			     </div>
-			 </div>
-			 `;
+        <div class="cloak-group" id="cloak${index}" style="display: none;">
+            <h3>${title}</h3>
+            <div class="form-group">
+                <label for="description${index}">Description</label>
+                <textarea id="description${index}" name="description${index}" class="form-control auto-expand"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="resolution${index}">Resolution: <span id="resolutionPrice${index}">5.00€</span></label>
+                <select id="resolution${index}" name="resolution${index}" onchange="updatePrice('resolution', ${index})">
+                    <option value="10x16 (Global & Client)" data-price="5.00">10x16 (Global & Client)</option>
+                    <option value="20x32 (Client)" data-price="7.00">20x32 (Client)</option>
+                    <option value="40x64 (Client)" data-price="10.00">40x64 (Client)</option>
+                </select>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="particles${index}" name="particles${index}" class="form-check-input" onchange="updatePrice('particles', ${index})">
+                <label for="particles${index}" class="form-check-label">Particles: <span id="particlesPrice${index}">3.00€</span></label>
+            </div>
+            <div class="form-group" id="particlesDescription${index}" style="display: none;">
+                <label for="particlesDesc${index}">Particles Description</label>
+                <textarea id="particlesDesc${index}" name="particlesDesc${index}" class="form-control auto-expand"></textarea>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="animation${index}" name="animation${index}" class="form-check-input" onchange="updatePrice('animation', ${index})">
+                <label for="animation${index}" class="form-check-label">Animation (Frames): <span id="animationPrice${index}">0.50€/frame</span></label>
+            </div>
+            <div class="form-group" id="animationDescription${index}" style="display: none;">
+                <label for="animationFrames${index}">Number of Frames</label>
+                <input type="number" id="animationFrames${index}" name="animationFrames${index}" min="0" max="50" class="form-control" oninput="updatePrice('animation', ${index})">
+                <label for="animationDesc${index}">Animation Description</label>
+                <textarea id="animationDesc${index}" name="animationDesc${index}" class="form-control auto-expand"></textarea>
+            </div>
+        </div>
+    `;
 			}
 
 			function calculateCloakPrice() {
@@ -665,6 +658,11 @@
 					document.body.classList.remove("no-scroll");
 				};
 
+				const fileInput = createElementWithClass("input", "form-control");
+				fileInput.type = "file";
+				fileInput.accept = ".json";
+				fileInput.onchange = (event) => handleFileImport(event);
+
 				const closeButton = createElementWithClass("button");
 				closeButton.textContent = "Close";
 				closeButton.onclick = () => {
@@ -675,6 +673,7 @@
 
 				content.appendChild(textarea);
 				content.appendChild(importButton);
+				content.appendChild(fileInput);
 				content.appendChild(closeButton);
 				popup.appendChild(content);
 
@@ -685,11 +684,51 @@
 
 			function clearErrorMessages() {
 				document.querySelectorAll(".detailed-popup, .blur-overlay").forEach((element) => element.remove());
+				document.body.classList.remove("no-scroll");
+			}
+
+			function verifyJsonData(data) {
+				if (typeof data.additionalCloaks !== "string" || typeof data.recoloredCloaks !== "string") {
+					return false;
+				}
+
+				const additionalCloaks = parseInt(data.additionalCloaks, 10);
+				const recoloredCloaks = parseInt(data.recoloredCloaks, 10);
+
+				if (isNaN(additionalCloaks) || isNaN(recoloredCloaks) || additionalCloaks > 10 || recoloredCloaks > 10) {
+					return false;
+				}
+
+				const totalCloaksCount = additionalCloaks + recoloredCloaks + 1;
+				if (totalCloaksCount > 21) {
+					return false;
+				}
+
+				const validResolutions = ["10x16 (Global & Client)", "20x32 (Client)", "40x64 (Client)"];
+				for (const cloak of data.cloaks) {
+					if (!validResolutions.includes(cloak.resolution)) {
+						return false;
+					}
+
+					if (cloak.animation && (isNaN(cloak.animationFrames) || cloak.animationFrames > 50)) {
+						return false;
+					}
+				}
+
+				return true;
 			}
 
 			function importJson(jsonString) {
 				try {
 					const jsonData = JSON.parse(jsonString);
+
+					// Verification logic
+					const isValid = verifyJsonData(jsonData);
+					if (!isValid) {
+						showNotification("Invalid JSON data. Please check your input.", `7F2B2B`, `FF5555`);
+						return;
+					}
+
 					setFormData(jsonData);
 					showNotification("JSON imported successfully", `2C7F2C`, `55ff55`);
 
@@ -707,14 +746,16 @@
 					result.innerHTML = "";
 
 					clearErrorMessages();
+					document.body.classList.remove("no-scroll");
 				} catch (error) {
 					showNotification("Invalid JSON format", `7F2B2B`, `ff5555`);
 				}
 			}
+
 			function validateDiscount(input) {
 				const discountValue = input.value.trim();
 				console.log("Validating discount value:", discountValue);
-				const discountPattern = /^(?!.*\s)(\d{1,2}(\.\d{1})?|100|[A-Za-z0-9]{6})$/;
+				const discountPattern = /^(100|[1-9][0-9]?|[A-Za-z]{6})$/;
 
 				if (discountValue === "") {
 					console.log("Discount value is empty, setting to blank.");
@@ -767,7 +808,7 @@
 
 				const discountInput = document.getElementById("cloakDiscount").value.trim();
 				if (discountInput !== "") {
-					const discountPattern = /^([0-9]{1,2}(\.[0-9]{1})?|100|[A-Za-z0-9]{6})$/;
+					const discountPattern = /^(100|[1-9][0-9]?|[A-Za-z]{6})$/;
 					if (!discountPattern.test(discountInput)) {
 						messages.push("Invalid discount. Enter a number between 0 and 100 or a valid code.");
 						valid = false;
@@ -844,6 +885,10 @@
 								updatePrice("particles", index);
 								updatePrice("animation", index);
 							});
+						}
+
+						if (data.code) {
+							setElementValue("cloakDiscount", data.code);
 						}
 					}
 				} catch (error) {
