@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>RAIIN</title>
-		<link rel="stylesheet" href="styles.css" />
-	</head>
-	<body>
-		<div id="notification" class="notification hidden"></div>
 
-		<header>
-			<pre>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>RAIIN</title>
+	<link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+	<div id="notification" class="notification hidden"></div>
+
+	<header>
+		<pre>
       :::::::::      :::     ::::::::::: ::::::::::: ::::    ::: 
      :+:    :+:   :+: :+:       :+:         :+:     :+:+:   :+:  
     +:+    +:+  +:+   +:+      +:+         +:+     :+:+:+  +:+   
@@ -18,392 +20,417 @@
   +#+    +#+ +#+     +#+     +#+         +#+     +#+  +#+#+#     
  #+#    #+# #+#     #+#     #+#         #+#     #+#   #+#+#      
 ###    ### ###     ### ########### ########### ###    ####       
-        </pre
-			>
-			<h1>Welcome to RAIIN</h1>
-		</header>
-		<nav>
-			<ul>
-				<li><a href="services.html">Services</a></li>
-				<li><a href="how-to-order.html">How to Order</a></li>
-				<li><a href="payment-information.html">Payment Information</a></li>
-				<li><a href="receive.html">Receive Your Order</a></li>
-				<li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
-				<li><a href="contact-us.html">Contact Us</a></li>
-				<li><a href="prices.html">Price Calculator</a></li>
-			</ul>
-		</nav>
-		<nav>
-			<ul>
-				<li><a href="cloak.html">Cloak Form</a></li>
-				<li><a href="sky.html">Sky Form</a></li>
-			</ul>
-		</nav>
-
-		<main>
-			<form id="cloakForm" class="form-grid">
-				<h2>Cloak Form</h2>
-				<div class="form-row">
-					<label for="additionalCloaks">Additional Cloaks:</label>
-					<input type="number" id="additionalCloaks" name="additionalCloaks" min="0" max="10" oninput="updateCloakSelect()" />
-				</div>
-				<div class="form-row">
-					<label for="recolors">Cloak Recolors:</label>
-					<input type="number" id="recolors" name="recoloredCloaks" min="0" max="10" oninput="updateCloakSelect()" />
-				</div>
-				<div id="cloakSelectContainer" class="form-row">
-					<label for="cloakSelect">Select Cloak</label>
-					<select id="cloakSelect" name="cloakSelect" class="form-control">
-						<option value="0">Main Cloak</option>
-					</select>
-				</div>
-				<div id="cloaks">
-					<div class="cloak-group" id="cloak0">
-						<h3>Main Cloak</h3>
-						<div class="form-group">
-							<label for="description0">Description</label>
-							<textarea id="description0" name="description0" class="form-control auto-expand"></textarea>
-						</div>
-						<div class="form-group">
-							<label for="resolution0">Resolution: <span id="resolutionPrice0"></span></label>
-							<select id="resolution0" name="resolution0" onchange="updatePrice('resolution', 0)">
-								<option value="10x16 (Global & Client)" data-price="5.00">10x16 (Global & Client)</option>
-								<option value="20x32 (Client)" data-price="7.00">20x32 (Client)</option>
-								<option value="40x64 (Client)" data-price="10.00">40x64 (Client)</option>
-							</select>
-						</div>
-						<div class="form-check">
-							<input type="checkbox" id="particles0" name="particles0" class="form-check-input" onchange="updatePrice('particles', 0)" />
-							<label for="particles0" class="form-check-label">Particles: <span id="particlesPrice0">3.00€</span></label>
-						</div>
-						<div class="form-group" id="particlesDescription0" style="display: none">
-							<label for="particlesDesc0">Particles Description</label>
-							<textarea id="particlesDesc0" name="particlesDesc0" class="form-control auto-expand"></textarea>
-						</div>
-						<div class="form-check">
-							<input type="checkbox" id="animation0" name="animation0" class="form-check-input" onchange="updatePrice('animation', 0)" />
-							<label for="animation0" class="form-check-label">Animation (Frames): <span id="animationPrice0"></span></label>
-						</div>
-						<div class="form-group">
-							<label for="animationFrames0">Number of Frames</label>
-							<input type="number" id="animationFrames0" name="animationFrames0" min="1" max="50" class="form-control" oninput="updatePrice('animation', 0); validateFrameCount(this ?? 1)" />
-							<label for="animationDesc0">Animation Description</label>
-							<textarea id="animationDesc0" name="animationDesc0" class="form-control auto-expand"></textarea>
-						</div>
+        </pre>
+		<h1>Welcome to RAIIN</h1>
+	</header>
+	<nav>
+		<button onclick="toggleMenu()">Menu</button>
+		<ul id="menu">
+			<li><a href="services.html">Services</a></li>
+			<li><a href="how-to-order.html">How to Order</a></li>
+			<li><a href="payment-information.html">Payment Information</a></li>
+			<li><a href="receive.html">Receive Your Order</a></li>
+			<li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+			<li><a href="contact-us.html">Contact Us</a></li>
+			<li><a href="prices.html">Price Calculator</a></li>
+		</ul>
+	</nav>
+	<nav>
+		<button onclick="toggleMenu2()">Forms</button>
+		<ul id="menu2">
+			<li><a href="cloak.html">Cloak Form</a></li>
+			<li><a href="sky.html">Sky Form</a></li>
+		</ul>
+	</nav>
+	<main>
+		<form id="cloakForm" class="form-grid">
+			<h2>Cloak Form</h2>
+			<div class="form-row">
+				<label for="additionalCloaks">Additional Cloaks:</label>
+				<input type="number" id="additionalCloaks" name="additionalCloaks" min="0" max="10"
+					oninput="updateCloakSelect()" />
+			</div>
+			<div class="form-row">
+				<label for="recolors">Cloak Recolors:</label>
+				<input type="number" id="recolors" name="recoloredCloaks" min="0" max="10"
+					oninput="updateCloakSelect()" />
+			</div>
+			<div id="cloakSelectContainer" class="form-row">
+				<label for="cloakSelect">Select Cloak</label>
+				<select id="cloakSelect" name="cloakSelect" class="form-control">
+					<option value="0">Main Cloak</option>
+				</select>
+			</div>
+			<div id="cloaks">
+				<div class="cloak-group" id="cloak0">
+					<h3>Main Cloak</h3>
+					<div class="form-group">
+						<label for="description0">Description</label>
+						<textarea id="description0" name="description0" class="form-control auto-expand"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="resolution0">Resolution: <span id="resolutionPrice0"></span></label>
+						<select id="resolution0" name="resolution0" onchange="updatePrice('resolution', 0)">
+							<option value="10x16 (Global & Client)" data-price="5.00">10x16 (Global & Client)</option>
+							<option value="20x32 (Client)" data-price="7.00">20x32 (Client)</option>
+							<option value="40x64 (Client)" data-price="10.00">40x64 (Client)</option>
+						</select>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" id="particles0" name="particles0" class="form-check-input"
+							onchange="updatePrice('particles', 0)" />
+						<label for="particles0" class="form-check-label">Particles: <span
+								id="particlesPrice0">3.00€</span></label>
+					</div>
+					<div class="form-group" id="particlesDescription0" style="display: none">
+						<label for="particlesDesc0">Particles Description</label>
+						<textarea id="particlesDesc0" name="particlesDesc0" class="form-control auto-expand"></textarea>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" id="animation0" name="animation0" class="form-check-input"
+							onchange="updatePrice('animation', 0)" />
+						<label for="animation0" class="form-check-label">Animation (Frames): <span
+								id="animationPrice0"></span></label>
+					</div>
+					<div class="form-group">
+						<label for="animationFrames0">Number of Frames</label>
+						<input type="number" id="animationFrames0" name="animationFrames0" min="1" max="50"
+							class="form-control" oninput="updatePrice('animation', 0); validateFrameCount(this ?? 1)" />
+						<label for="animationDesc0">Animation Description</label>
+						<textarea id="animationDesc0" name="animationDesc0" class="form-control auto-expand"></textarea>
 					</div>
 				</div>
-				<div class="form-row">
-					<label for="cloakDiscount">Discount (% or Code):</label>
-					<textarea type="text" id="cloakDiscount" name="cloakDiscount" class="form-control" oninput="validateDiscount(this)"></textarea>
-				</div>
-				<div class="form-row">
-					<button type="button" onclick="calculatePriceAndExportJSON()">Calculate Price & Export JSON</button>
-					<button type="button" onclick="showImportPopup()">Import</button>
-					<input type="file" id="importFile" style="display: none" accept=".json" onchange="handleFileImport(event)" />
-					<button type="button" id="copyJsonButton" class="hidden" onclick="copyJson()">Copy JSON</button>
-				</div>
-
-				<div id="jsonOutputContainer" class="form-row hidden">
-					<h3>JSON Output:</h3>
-					<div id="jsonDisplay" class="json-display"></div>
-					<input type="hidden" id="jsonOutputHidden" />
-				</div>
-				<div id="result" class="hidden"></div>
-			</form>
-		</main>
-		<footer>
-			<div class="footer-content">
-				<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR">RAIIN Discord</a> | @TheEnemiez</p>
-				<ul class="social-links">
-					<li><a href="https://www.youtube.com/@TheEnemiez">TheEnemiez YT</a><br /></li>
-					<li><a href="https://www.youtube.com/@Cookiehh">Cookiehh YT</a><br /></li>
-				</ul>
-				<p>© 2024 RAIIN. All rights reserved.</p>
 			</div>
-		</footer>
-		<script>
-			function handleFileImport(event) {
-				const file = event.target.files[0];
-				if (file && file.type === "application/json") {
-					const reader = new FileReader();
-					reader.onload = (e) => {
-						try {
-							const jsonString = e.target.result;
-							importJson(jsonString);
-						} catch (error) {
-							showNotification("Error importing JSON: " + error.message, `7F2B2B`, "FF5555");
-						}
-					};
-					reader.onerror = () => {
-						showNotification("Error reading file", `7F2B2B`, "FF5555");
-					};
-					reader.readAsText(file);
-				} else {
-					showNotification("Please select a valid JSON file", `7F2B2B`, "FF5555");
+			<div class="form-row">
+				<label for="cloakDiscount">Discount (% or Code):</label>
+				<textarea type="text" id="cloakDiscount" name="cloakDiscount" class="form-control"
+					oninput="validateDiscount(this)"></textarea>
+			</div>
+			<div class="form-row">
+				<button type="button" onclick="calculatePriceAndExportJSON()">Calculate Price & Export JSON</button>
+				<button type="button" onclick="showImportPopup()">Import</button>
+				<input type="file" id="importFile" style="display: none" accept=".json"
+					onchange="handleFileImport(event)" />
+				<button type="button" id="copyJsonButton" class="hidden" onclick="copyJson()">Copy JSON</button>
+			</div>
+
+			<div id="jsonOutputContainer" class="form-row hidden">
+				<h3>JSON Output:</h3>
+				<div id="jsonDisplay" class="json-display"></div>
+				<input type="hidden" id="jsonOutputHidden" />
+			</div>
+			<div id="result" class="hidden"></div>
+		</form>
+	</main>
+	<footer>
+		<div class="footer-content">
+			<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR">RAIIN Discord</a> | @TheEnemiez</p>
+			<ul class="social-links">
+				<li><a href="https://www.youtube.com/@TheEnemiez">TheEnemiez YT</a><br /></li>
+				<li><a href="https://www.youtube.com/@Cookiehh">Cookiehh YT</a><br /></li>
+			</ul>
+			<p>© 2024 RAIIN. All rights reserved.</p>
+		</div>
+	</footer>
+	<script>
+		function toggleMenu() {
+			var menu = document.getElementById('menu');
+			if (menu.classList.contains('show')) {
+				menu.classList.remove('show');
+			} else {
+				menu.classList.add('show');
+			}
+		}
+		function toggleMenu2() {
+			var menu2 = document.getElementById('menu2');
+			if (menu2.classList.contains('show')) {
+				menu2.classList.remove('show');
+			} else {
+				menu2.classList.add('show');
+			}
+		}
+		function handleFileImport(event) {
+			const file = event.target.files[0];
+			if (file && file.type === "application/json") {
+				const reader = new FileReader();
+				reader.onload = (e) => {
+					try {
+						const jsonString = e.target.result;
+						importJson(jsonString);
+					} catch (error) {
+						showNotification("Error importing JSON: " + error.message, `7F2B2B`, "FF5555");
+					}
+				};
+				reader.onerror = () => {
+					showNotification("Error reading file", `7F2B2B`, "FF5555");
+				};
+				reader.readAsText(file);
+			} else {
+				showNotification("Please select a valid JSON file", `7F2B2B`, "FF5555");
+			}
+		}
+
+		function showNotification(message, bgColor = "000000", textColor = "ffffff") {
+			const notification = document.getElementById("notification");
+			notification.textContent = message;
+			notification.style.backgroundColor = `#${bgColor}`;
+			notification.style.color = `#${textColor}`;
+
+			if (notification.hideTimeout) {
+				clearTimeout(notification.hideTimeout);
+			}
+
+			notification.classList.remove("hidden");
+			notification.classList.add("visible");
+
+			notification.hideTimeout = setTimeout(() => {
+				requestAnimationFrame(() => {
+					notification.classList.remove("visible");
+					notification.classList.add("hidden");
+				});
+			}, 3000);
+		}
+
+		function showDetailedPopup(details) {
+			document.querySelectorAll(".detailed-popup, .blur-overlay").forEach((element) => element.remove());
+
+			const overlay = document.createElement("div");
+			overlay.classList.add("blur-overlay");
+			document.body.appendChild(overlay);
+
+			const detailedPopup = document.createElement("div");
+			detailedPopup.classList.add("detailed-popup");
+
+			const content = document.createElement("div");
+			content.classList.add("content");
+			content.innerHTML = `<p>${details.join("<br>")}</p>`;
+
+			const closeButton = document.createElement("button");
+			closeButton.textContent = "Close";
+			closeButton.onclick = () => {
+				detailedPopup.remove();
+				overlay.remove();
+				hideNotification();
+				document.body.classList.remove("no-scroll");
+			};
+
+			content.appendChild(closeButton);
+			detailedPopup.appendChild(content);
+
+			document.body.appendChild(detailedPopup);
+			document.body.classList.add("no-scroll");
+		}
+
+		function hideNotification() {
+			const notification = document.getElementById("notification");
+			notification.classList.remove("visible");
+			notification.classList.add("hidden");
+		}
+		function updatePrice(type, index) {
+			const additionalCloaksCount = parseInt(document.getElementById("additionalCloaks").value) || 0;
+			const isAdditional = index > 0 && index <= additionalCloaksCount;
+			const isRecolor = index > additionalCloaksCount;
+
+			const resolutionElement = document.getElementById(`resolution${index}`);
+			const basePrice = parseFloat(resolutionElement.options[resolutionElement.selectedIndex].getAttribute("data-price"));
+
+			let resolutionPrice = basePrice;
+			if (isAdditional) {
+				resolutionPrice -= 1;
+			} else if (isRecolor) {
+				resolutionPrice = 2;
+			}
+
+			let animationPricePerFrame = 0.5;
+			if (isAdditional) {
+				switch (resolutionElement.value) {
+					case "10x16 (Global & Client)":
+						animationPricePerFrame = 0.4;
+						break;
+					case "20x32 (Client)":
+						animationPricePerFrame = 0.6;
+						break;
+					case "40x64 (Client)":
+						animationPricePerFrame = 0.9;
+						break;
+				}
+			} else if (isRecolor) {
+				switch (resolutionElement.value) {
+					case "10x16 (Global & Client)":
+						animationPricePerFrame = 0.2;
+						break;
+					case "20x32 (Client)":
+						animationPricePerFrame = 0.3;
+						break;
+					case "40x64 (Client)":
+						animationPricePerFrame = 0.4;
+						break;
+				}
+			} else {
+				switch (resolutionElement.value) {
+					case "10x16 (Global & Client)":
+						animationPricePerFrame = 0.5;
+						break;
+					case "20x32 (Client)":
+						animationPricePerFrame = 0.75;
+						break;
+					case "40x64 (Client)":
+						animationPricePerFrame = 1.0;
+						break;
 				}
 			}
 
-			function showNotification(message, bgColor = "000000", textColor = "ffffff") {
-				const notification = document.getElementById("notification");
-				notification.textContent = message;
-				notification.style.backgroundColor = `#${bgColor}`;
-				notification.style.color = `#${textColor}`;
-
-				if (notification.hideTimeout) {
-					clearTimeout(notification.hideTimeout);
-				}
-
-				notification.classList.remove("hidden");
-				notification.classList.add("visible");
-
-				notification.hideTimeout = setTimeout(() => {
-					requestAnimationFrame(() => {
-						notification.classList.remove("visible");
-						notification.classList.add("hidden");
-					});
-				}, 3000);
+			switch (type) {
+				case "resolution":
+					document.getElementById(`resolutionPrice${index}`).innerText = `${resolutionPrice.toFixed(2)}€`;
+					updatePrice("animation", index);
+					break;
+				case "particles":
+					const particlesPrice = document.getElementById(`particles${index}`).checked ? 3.0 : 0.0;
+					document.getElementById(`particlesPrice${index}`).innerText = `${particlesPrice.toFixed(2)}€`;
+					break;
+				case "animation":
+					const framesElement = document.getElementById(`animationFrames${index}`);
+					let frames = parseInt(framesElement.value) || 0;
+					if (frames > 50) {
+						framesElement.value = 50;
+						frames = 50;
+					}
+					const animationPrice = frames > 0 ? (frames * animationPricePerFrame).toFixed(2) : `(${animationPricePerFrame.toFixed(2)}€/frame)`;
+					document.getElementById(`animationPrice${index}`).innerText = frames > 0 ? `${animationPrice}€` : animationPrice;
+					break;
 			}
+		}
 
-			function showDetailedPopup(details) {
-				document.querySelectorAll(".detailed-popup, .blur-overlay").forEach((element) => element.remove());
+		function getCloakType(index) {
+			const additionalCloaksCount = parseInt(document.getElementById("additionalCloaks").value, 10) || 0;
+			if (index === 0) return "main";
+			if (index <= additionalCloaksCount) return "additional";
+			return "recolor";
+		}
 
-				const overlay = document.createElement("div");
-				overlay.classList.add("blur-overlay");
-				document.body.appendChild(overlay);
+		function getCloakFormData() {
+			const formData = new FormData(document.getElementById("cloakForm"));
+			const data = {
+				additionalCloaks: formData.get("additionalCloaks"),
+				recoloredCloaks: formData.get("recoloredCloaks"),
+				cloaks: [],
+			};
 
-				const detailedPopup = document.createElement("div");
-				detailedPopup.classList.add("detailed-popup");
+			const additionalCloaksCount = parseInt(data.additionalCloaks, 10) || 0;
+			const recoloredCloaksCount = parseInt(data.recoloredCloaks, 10) || 0;
+			const cloakCount = additionalCloaksCount + recoloredCloaksCount + 1;
 
-				const content = document.createElement("div");
-				content.classList.add("content");
-				content.innerHTML = `<p>${details.join("<br>")}</p>`;
+			for (let i = 0; i < cloakCount; i++) {
+				const particlesCheckbox = document.getElementById(`particles${i}`);
+				const animationCheckbox = document.getElementById(`animation${i}`);
 
-				const closeButton = document.createElement("button");
-				closeButton.textContent = "Close";
-				closeButton.onclick = () => {
-					detailedPopup.remove();
-					overlay.remove();
-					hideNotification();
-					document.body.classList.remove("no-scroll");
+				const cloak = {
+					type: i === 0 ? "main" : i <= additionalCloaksCount ? "additional" : "recolor",
+					description: formData.get(`description${i}`),
+					resolution: formData.get(`resolution${i}`),
+					particles: particlesCheckbox ? particlesCheckbox.checked : false,
+					animation: animationCheckbox ? animationCheckbox.checked : false,
 				};
 
-				content.appendChild(closeButton);
-				detailedPopup.appendChild(content);
-
-				document.body.appendChild(detailedPopup);
-				document.body.classList.add("no-scroll");
-			}
-
-			function hideNotification() {
-				const notification = document.getElementById("notification");
-				notification.classList.remove("visible");
-				notification.classList.add("hidden");
-			}
-			function updatePrice(type, index) {
-				const additionalCloaksCount = parseInt(document.getElementById("additionalCloaks").value) || 0;
-				const isAdditional = index > 0 && index <= additionalCloaksCount;
-				const isRecolor = index > additionalCloaksCount;
-
-				const resolutionElement = document.getElementById(`resolution${index}`);
-				const basePrice = parseFloat(resolutionElement.options[resolutionElement.selectedIndex].getAttribute("data-price"));
-
-				let resolutionPrice = basePrice;
-				if (isAdditional) {
-					resolutionPrice -= 1;
-				} else if (isRecolor) {
-					resolutionPrice = 2;
+				if (cloak.particles && particlesCheckbox) {
+					cloak.particlesDesc = formData.get(`particlesDesc${i}`);
+				}
+				if (cloak.animation && animationCheckbox) {
+					const animationFrames = Math.min(parseInt(formData.get(`animationFrames${i}`), 10), 50);
+					cloak.animationFrames = animationFrames;
+					cloak.animationDesc = formData.get(`animationDesc${i}`);
 				}
 
-				let animationPricePerFrame = 0.5;
-				if (isAdditional) {
-					switch (resolutionElement.value) {
-						case "10x16 (Global & Client)":
-							animationPricePerFrame = 0.4;
-							break;
-						case "20x32 (Client)":
-							animationPricePerFrame = 0.6;
-							break;
-						case "40x64 (Client)":
-							animationPricePerFrame = 0.9;
-							break;
-					}
-				} else if (isRecolor) {
-					switch (resolutionElement.value) {
-						case "10x16 (Global & Client)":
-							animationPricePerFrame = 0.2;
-							break;
-						case "20x32 (Client)":
-							animationPricePerFrame = 0.3;
-							break;
-						case "40x64 (Client)":
-							animationPricePerFrame = 0.4;
-							break;
-					}
-				} else {
-					switch (resolutionElement.value) {
-						case "10x16 (Global & Client)":
-							animationPricePerFrame = 0.5;
-							break;
-						case "20x32 (Client)":
-							animationPricePerFrame = 0.75;
-							break;
-						case "40x64 (Client)":
-							animationPricePerFrame = 1.0;
-							break;
-					}
-				}
-
-				switch (type) {
-					case "resolution":
-						document.getElementById(`resolutionPrice${index}`).innerText = `${resolutionPrice.toFixed(2)}€`;
-						updatePrice("animation", index);
-						break;
-					case "particles":
-						const particlesPrice = document.getElementById(`particles${index}`).checked ? 3.0 : 0.0;
-						document.getElementById(`particlesPrice${index}`).innerText = `${particlesPrice.toFixed(2)}€`;
-						break;
-					case "animation":
-						const framesElement = document.getElementById(`animationFrames${index}`);
-						let frames = parseInt(framesElement.value) || 0;
-						if (frames > 50) {
-							framesElement.value = 50;
-							frames = 50;
-						}
-						const animationPrice = frames > 0 ? (frames * animationPricePerFrame).toFixed(2) : `(${animationPricePerFrame.toFixed(2)}€/frame)`;
-						document.getElementById(`animationPrice${index}`).innerText = frames > 0 ? `${animationPrice}€` : animationPrice;
-						break;
-				}
+				data.cloaks.push(cloak);
 			}
 
-			function getCloakType(index) {
-				const additionalCloaksCount = parseInt(document.getElementById("additionalCloaks").value, 10) || 0;
-				if (index === 0) return "main";
-				if (index <= additionalCloaksCount) return "additional";
-				return "recolor";
+			return data;
+		}
+
+		function updateCloakSelect() {
+			const additionalCloaks = document.getElementById("additionalCloaks");
+			const recolors = document.getElementById("recolors");
+
+			additionalCloaks.value = Math.min(additionalCloaks.value, 10);
+			recolors.value = Math.min(recolors.value, 10);
+
+			const additionalCloaksCount = parseInt(additionalCloaks.value, 10) || 0;
+			const recolorsCount = parseInt(recolors.value, 10) || 0;
+			const totalCloaksCount = additionalCloaksCount + recolorsCount + 1;
+
+			const cloaksContainer = document.getElementById("cloaks");
+			const cloakSelect = document.getElementById("cloakSelect");
+
+			const existingData = getCloakFormData();
+
+			cloakSelect.innerHTML = '<option value="0">Main Cloak</option>';
+			cloaksContainer.innerHTML = createCloakGroup("Main Cloak", 0);
+
+			for (let i = 1; i < totalCloaksCount; i++) {
+				const isAdditional = i <= additionalCloaksCount;
+				const title = isAdditional ? `Additional Cloak ${i}` : `Recolored Cloak ${i - additionalCloaksCount}`;
+				cloakSelect.innerHTML += `<option value="${i}">${title}</option>`;
+				cloaksContainer.innerHTML += createCloakGroup(title, i);
 			}
 
-			function getCloakFormData() {
-				const formData = new FormData(document.getElementById("cloakForm"));
-				const data = {
-					additionalCloaks: formData.get("additionalCloaks"),
-					recoloredCloaks: formData.get("recoloredCloaks"),
-					cloaks: [],
+			setFormData(existingData);
+
+			document.getElementById("cloak0").style.display = "block";
+
+			for (let i = 0; i < totalCloaksCount; i++) {
+				updatePrice("resolution", i);
+				updatePrice("particles", i);
+				updatePrice("animation", i);
+			}
+		}
+
+		function getFormData() {
+			const formData = new FormData(document.getElementById("cloakForm"));
+			const data = {
+				additionalCloaks: formData.get("additionalCloaks"),
+				recoloredCloaks: formData.get("recoloredCloaks"),
+				cloaks: [],
+			};
+
+			const additionalCloaksCount = parseInt(data.additionalCloaks, 10) || 0;
+			const recoloredCloaksCount = parseInt(data.recoloredCloaks, 10) || 0;
+			const cloakCount = additionalCloaksCount + recoloredCloaksCount + 1;
+
+			for (let i = 0; i < cloakCount; i++) {
+				const particlesCheckbox = document.getElementById(`particles${i}`);
+				const animationCheckbox = document.getElementById(`animation${i}`);
+
+				const cloak = {
+					type: i === 0 ? "main" : i <= additionalCloaksCount ? "additional" : "recolor",
+					description: formData.get(`description${i}`),
+					resolution: formData.get(`resolution${i}`),
+					particles: particlesCheckbox ? particlesCheckbox.checked : false,
+					animation: animationCheckbox ? animationCheckbox.checked : false,
 				};
 
-				const additionalCloaksCount = parseInt(data.additionalCloaks, 10) || 0;
-				const recoloredCloaksCount = parseInt(data.recoloredCloaks, 10) || 0;
-				const cloakCount = additionalCloaksCount + recoloredCloaksCount + 1;
-
-				for (let i = 0; i < cloakCount; i++) {
-					const particlesCheckbox = document.getElementById(`particles${i}`);
-					const animationCheckbox = document.getElementById(`animation${i}`);
-
-					const cloak = {
-						type: i === 0 ? "main" : i <= additionalCloaksCount ? "additional" : "recolor",
-						description: formData.get(`description${i}`),
-						resolution: formData.get(`resolution${i}`),
-						particles: particlesCheckbox ? particlesCheckbox.checked : false,
-						animation: animationCheckbox ? animationCheckbox.checked : false,
-					};
-
-					if (cloak.particles && particlesCheckbox) {
-						cloak.particlesDesc = formData.get(`particlesDesc${i}`);
-					}
-					if (cloak.animation && animationCheckbox) {
-						const animationFrames = Math.min(parseInt(formData.get(`animationFrames${i}`), 10), 50);
-						cloak.animationFrames = animationFrames;
-						cloak.animationDesc = formData.get(`animationDesc${i}`);
-					}
-
-					data.cloaks.push(cloak);
+				if (cloak.particles && particlesCheckbox) {
+					cloak.particlesDesc = formData.get(`particlesDesc${i}`);
+				}
+				if (cloak.animation && animationCheckbox) {
+					const animationFrames = Math.min(parseInt(formData.get(`animationFrames${i}`), 10), 50);
+					cloak.animationFrames = animationFrames;
+					cloak.animationDesc = formData.get(`animationDesc${i}`);
 				}
 
-				return data;
+				data.cloaks.push(cloak);
 			}
 
-			function updateCloakSelect() {
-				const additionalCloaks = document.getElementById("additionalCloaks");
-				const recolors = document.getElementById("recolors");
+			return data;
+		}
 
-				additionalCloaks.value = Math.min(additionalCloaks.value, 10);
-				recolors.value = Math.min(recolors.value, 10);
+		function toggleForms() {
+			const serviceType = document.getElementById("serviceType").value;
+			document.getElementById("cloakForm").classList.toggle("hidden", serviceType !== "cloak");
+		}
 
-				const additionalCloaksCount = parseInt(additionalCloaks.value, 10) || 0;
-				const recolorsCount = parseInt(recolors.value, 10) || 0;
-				const totalCloaksCount = additionalCloaksCount + recolorsCount + 1;
-
-				const cloaksContainer = document.getElementById("cloaks");
-				const cloakSelect = document.getElementById("cloakSelect");
-
-				const existingData = getCloakFormData();
-
-				cloakSelect.innerHTML = '<option value="0">Main Cloak</option>';
-				cloaksContainer.innerHTML = createCloakGroup("Main Cloak", 0);
-
-				for (let i = 1; i < totalCloaksCount; i++) {
-					const isAdditional = i <= additionalCloaksCount;
-					const title = isAdditional ? `Additional Cloak ${i}` : `Recolored Cloak ${i - additionalCloaksCount}`;
-					cloakSelect.innerHTML += `<option value="${i}">${title}</option>`;
-					cloaksContainer.innerHTML += createCloakGroup(title, i);
-				}
-
-				setFormData(existingData);
-
-				document.getElementById("cloak0").style.display = "block";
-
-				for (let i = 0; i < totalCloaksCount; i++) {
-					updatePrice("resolution", i);
-					updatePrice("particles", i);
-					updatePrice("animation", i);
-				}
-			}
-
-			function getFormData() {
-				const formData = new FormData(document.getElementById("cloakForm"));
-				const data = {
-					additionalCloaks: formData.get("additionalCloaks"),
-					recoloredCloaks: formData.get("recoloredCloaks"),
-					cloaks: [],
-				};
-
-				const additionalCloaksCount = parseInt(data.additionalCloaks, 10) || 0;
-				const recoloredCloaksCount = parseInt(data.recoloredCloaks, 10) || 0;
-				const cloakCount = additionalCloaksCount + recoloredCloaksCount + 1;
-
-				for (let i = 0; i < cloakCount; i++) {
-					const particlesCheckbox = document.getElementById(`particles${i}`);
-					const animationCheckbox = document.getElementById(`animation${i}`);
-
-					const cloak = {
-						type: i === 0 ? "main" : i <= additionalCloaksCount ? "additional" : "recolor",
-						description: formData.get(`description${i}`),
-						resolution: formData.get(`resolution${i}`),
-						particles: particlesCheckbox ? particlesCheckbox.checked : false,
-						animation: animationCheckbox ? animationCheckbox.checked : false,
-					};
-
-					if (cloak.particles && particlesCheckbox) {
-						cloak.particlesDesc = formData.get(`particlesDesc${i}`);
-					}
-					if (cloak.animation && animationCheckbox) {
-						const animationFrames = Math.min(parseInt(formData.get(`animationFrames${i}`), 10), 50);
-						cloak.animationFrames = animationFrames;
-						cloak.animationDesc = formData.get(`animationDesc${i}`);
-					}
-
-					data.cloaks.push(cloak);
-				}
-
-				return data;
-			}
-
-			function toggleForms() {
-				const serviceType = document.getElementById("serviceType").value;
-				document.getElementById("cloakForm").classList.toggle("hidden", serviceType !== "cloak");
-			}
-
-			function createCloakGroup(title, index) {
-				return `
+		function createCloakGroup(title, index) {
+			return `
         <div class="cloak-group" id="cloak${index}" style="display: none;">
             <h3>${title}</h3>
             <div class="form-group">
@@ -438,535 +465,536 @@
             </div>
         </div>
     `;
-			}
+		}
 
-			function calculateCloakPrice() {
-				const formData = getFormData();
-				if (!formData) return 0;
+		function calculateCloakPrice() {
+			const formData = getFormData();
+			if (!formData) return 0;
 
-				let totalPrice = 0;
+			let totalPrice = 0;
 
-				formData.cloaks.forEach((cloak, index) => {
-					const basePrice = getCloakBasePrice(cloak, index);
-					totalPrice += basePrice;
+			formData.cloaks.forEach((cloak, index) => {
+				const basePrice = getCloakBasePrice(cloak, index);
+				totalPrice += basePrice;
 
-					if (cloak.particles) {
-						totalPrice += 3;
-					}
-
-					if (cloak.animation) {
-						totalPrice += getAnimationPrice(cloak.resolution, cloak.animationFrames);
-					}
-				});
-
-				const discount = parseFloat(document.getElementById("cloakDiscount").value) || 0;
-				const discountedPrice = totalPrice * (1 - discount / 100);
-
-				return discountedPrice.toFixed(2);
-			}
-			function getCloakBasePrice(cloak, index) {
-				let basePrice = 0;
-				const isMainCloak = index === 0;
-				const isAdditionalCloak = cloak.type === "additional";
-				const isRecoloredCloak = cloak.type === "recolor";
-
-				switch (cloak.resolution) {
-					case "10x16 (Global & Client)":
-						if (isMainCloak) basePrice = 5;
-						if (isAdditionalCloak) basePrice = 4;
-						if (isRecoloredCloak) basePrice = 2;
-						break;
-					case "20x32 (Client)":
-						if (isMainCloak) basePrice = 7;
-						if (isAdditionalCloak) basePrice = 6;
-						if (isRecoloredCloak) basePrice = 2;
-						break;
-					case "40x64 (Client)":
-						if (isMainCloak) basePrice = 10;
-						if (isAdditionalCloak) basePrice = 9;
-						if (isRecoloredCloak) basePrice = 2;
-						break;
+				if (cloak.particles) {
+					totalPrice += 3;
 				}
 
-				return basePrice;
+				if (cloak.animation) {
+					totalPrice += getAnimationPrice(cloak.resolution, cloak.animationFrames);
+				}
+			});
+
+			const discount = parseFloat(document.getElementById("cloakDiscount").value) || 0;
+			const discountedPrice = totalPrice * (1 - discount / 100);
+
+			return discountedPrice.toFixed(2);
+		}
+		function getCloakBasePrice(cloak, index) {
+			let basePrice = 0;
+			const isMainCloak = index === 0;
+			const isAdditionalCloak = cloak.type === "additional";
+			const isRecoloredCloak = cloak.type === "recolor";
+
+			switch (cloak.resolution) {
+				case "10x16 (Global & Client)":
+					if (isMainCloak) basePrice = 5;
+					if (isAdditionalCloak) basePrice = 4;
+					if (isRecoloredCloak) basePrice = 2;
+					break;
+				case "20x32 (Client)":
+					if (isMainCloak) basePrice = 7;
+					if (isAdditionalCloak) basePrice = 6;
+					if (isRecoloredCloak) basePrice = 2;
+					break;
+				case "40x64 (Client)":
+					if (isMainCloak) basePrice = 10;
+					if (isAdditionalCloak) basePrice = 9;
+					if (isRecoloredCloak) basePrice = 2;
+					break;
 			}
 
-			function getAnimationPrice(cloakType, resolution, frames) {
-				let pricePerFrame = 0;
+			return basePrice;
+		}
 
-				switch (resolution) {
-					case "10x16 (Global & Client)":
-						if (cloakType === "main") pricePerFrame = 0.5;
-						else if (cloakType === "additional") pricePerFrame = 0.4;
-						else if (cloakType === "recolor") pricePerFrame = 0.2;
-						break;
-					case "20x32 (Client)":
-						if (cloakType === "main") pricePerFrame = 0.75;
-						else if (cloakType === "additional") pricePerFrame = 0.6;
-						else if (cloakType === "recolor") pricePerFrame = 0.3;
-						break;
-					case "40x64 (Client)":
-						if (cloakType === "main") pricePerFrame = 1.0;
-						else if (cloakType === "additional") pricePerFrame = 0.9;
-						else if (cloakType === "recolor") pricePerFrame = 0.4;
-						break;
-				}
+		function getAnimationPrice(cloakType, resolution, frames) {
+			let pricePerFrame = 0;
 
-				return frames * pricePerFrame;
+			switch (resolution) {
+				case "10x16 (Global & Client)":
+					if (cloakType === "main") pricePerFrame = 0.5;
+					else if (cloakType === "additional") pricePerFrame = 0.4;
+					else if (cloakType === "recolor") pricePerFrame = 0.2;
+					break;
+				case "20x32 (Client)":
+					if (cloakType === "main") pricePerFrame = 0.75;
+					else if (cloakType === "additional") pricePerFrame = 0.6;
+					else if (cloakType === "recolor") pricePerFrame = 0.3;
+					break;
+				case "40x64 (Client)":
+					if (cloakType === "main") pricePerFrame = 1.0;
+					else if (cloakType === "additional") pricePerFrame = 0.9;
+					else if (cloakType === "recolor") pricePerFrame = 0.4;
+					break;
 			}
 
-			function calculatePriceAndExportJSON() {
-				clearErrorMessages();
+			return frames * pricePerFrame;
+		}
 
-				let formData;
-				let priceBreakdown = [];
-				let totalPrice = 0;
-				let discountedPrice = 0;
+		function calculatePriceAndExportJSON() {
+			clearErrorMessages();
 
-				if (!validateForm()) {
-					return;
-				}
+			let formData;
+			let priceBreakdown = [];
+			let totalPrice = 0;
+			let discountedPrice = 0;
 
-				formData = getCloakFormData();
-				if (!formData) {
-					return;
-				}
-
-				formData.cloaks.forEach((cloak, index) => {
-					const basePrice = getCloakBasePrice(cloak, index);
-					let cloakPrice = basePrice;
-					let details = `Cloak ${index + 1} (${cloak.type}): ${basePrice.toFixed(2)}€`;
-
-					if (cloak.particles) {
-						cloakPrice += 3;
-						details += ` + Particles: 3.00€`;
-					}
-
-					if (cloak.animation) {
-						const animationPrice = getAnimationPrice(cloak.type, cloak.resolution, cloak.animationFrames);
-						cloakPrice += animationPrice;
-						details += ` + Animation: ${animationPrice.toFixed(2)}€`;
-					}
-
-					priceBreakdown.push(details);
-					totalPrice += cloakPrice;
-				});
-
-				const discountValue = document.getElementById("cloakDiscount").value.trim();
-				const discount = parseFloat(discountValue);
-
-				if (isNaN(discount) && discountValue !== "") {
-					formData.code = discountValue;
-					priceBreakdown.push(`Discount Code Applied: ${discountValue}`);
-				} else if (!isNaN(discount) && discount > 0) {
-					priceBreakdown.push(`Discount Applied: ${discount}%`);
-					totalPrice *= 1 - discount / 100;
-				}
-
-				discountedPrice = totalPrice.toFixed(2);
-				showNotification(`Total Cloak Price: ${discountedPrice}€`, `2C7F2C`, `55ff55`);
-
-				let summary = priceBreakdown.join("<br>");
-				const formattedJsonString = JSON.stringify(formData, null, 2);
-				const compactJsonString = JSON.stringify(formData);
-
-				const lines = formattedJsonString.split("\n");
-				const maxLines = 10;
-				const visibleLines = lines.slice(0, maxLines).join("\n");
-				const isOverflow = lines.length > maxLines;
-
-				const jsonDisplay = document.getElementById("jsonDisplay");
-				jsonDisplay.innerHTML = visibleLines + (isOverflow ? "\n..." : "");
-
-				document.getElementById("jsonOutputHidden").value = compactJsonString;
-
-				document.getElementById("copyJsonButton").classList.remove("hidden");
-				document.getElementById("jsonOutputContainer").classList.remove("hidden");
-
-				const result = document.getElementById("result");
-				result.innerHTML = summary + `<h3>Total Price: ${discountedPrice}€</h3>`;
-				result.classList.remove("hidden");
+			if (!validateForm()) {
+				return;
 			}
 
-			function displayJsonFormatted(jsonString) {
-				const lines = jsonString.split("\n");
-				const maxLines = 10;
-				const visibleLines = lines.slice(0, maxLines).join("\n");
-				const isOverflow = lines.length > maxLines;
-
-				const jsonDisplay = document.getElementById("jsonDisplay");
-				jsonDisplay.innerHTML = visibleLines + (isOverflow ? "\n..." : "");
+			formData = getCloakFormData();
+			if (!formData) {
+				return;
 			}
 
-			function copyJson() {
-				const jsonOutputHidden = document.getElementById("jsonOutputHidden");
+			formData.cloaks.forEach((cloak, index) => {
+				const basePrice = getCloakBasePrice(cloak, index);
+				let cloakPrice = basePrice;
+				let details = `Cloak ${index + 1} (${cloak.type}): ${basePrice.toFixed(2)}€`;
 
-				navigator.clipboard
-					.writeText(jsonOutputHidden.value)
-					.then(() => {
-						showNotification("JSON copied to clipboard", `2C7F2C`, `55ff55`);
-
-						localStorage.clear();
-
-						document.getElementById("cloakForm").reset();
-						updateCloakSelect();
-
-						const jsonOutputContainer = document.getElementById("jsonOutputContainer");
-						const copyJsonButton = document.getElementById("copyJsonButton");
-						const jsonDisplay = document.getElementById("jsonDisplay");
-
-						jsonOutputContainer.classList.add("hidden");
-						copyJsonButton.classList.add("hidden");
-
-						jsonDisplay.innerHTML = "";
-						jsonOutputHidden.value = "";
-
-						const result = document.getElementById("result");
-						result.classList.add("hidden");
-						result.innerHTML = "";
-
-						clearErrorMessages();
-					})
-					.catch((err) => {
-						showNotification("Failed to copy JSON", `7F2B2B`, `ff5555`);
-						console.error("Could not copy text: ", err);
-					});
-			}
-
-			function showImportPopup() {
-				const createElementWithClass = (tag, ...classNames) => {
-					const element = document.createElement(tag);
-					classNames.forEach((className) => element.classList.add(className));
-					return element;
-				};
-
-				const overlay = createElementWithClass("div", "blur-overlay");
-				const popup = createElementWithClass("div", "detailed-popup");
-				const content = createElementWithClass("div", "content");
-
-				const textarea = createElementWithClass("textarea", "form-control", "auto-expand", "import-textarea");
-				textarea.rows = 10;
-				textarea.placeholder = "Paste your JSON here...";
-
-				const importButton = createElementWithClass("button");
-				importButton.textContent = "Import JSON";
-				importButton.onclick = () => {
-					importJson(textarea.value);
-					overlay.remove();
-					popup.remove();
-					document.body.classList.remove("no-scroll");
-				};
-
-				const fileInput = createElementWithClass("input", "form-control");
-				fileInput.type = "file";
-				fileInput.accept = ".json";
-				fileInput.onchange = (event) => handleFileImport(event);
-
-				const closeButton = createElementWithClass("button");
-				closeButton.textContent = "Close";
-				closeButton.onclick = () => {
-					overlay.remove();
-					popup.remove();
-					document.body.classList.remove("no-scroll");
-				};
-
-				content.appendChild(textarea);
-				content.appendChild(importButton);
-				content.appendChild(closeButton);
-				content.appendChild(fileInput);
-				popup.appendChild(content);
-
-				document.body.appendChild(overlay);
-				document.body.appendChild(popup);
-				document.body.classList.add("no-scroll");
-			}
-
-			function clearErrorMessages() {
-				document.querySelectorAll(".detailed-popup, .blur-overlay").forEach((element) => element.remove());
-				document.body.classList.remove("no-scroll");
-			}
-
-			function verifyJsonData(data) {
-				if (typeof data.additionalCloaks !== "string" || typeof data.recoloredCloaks !== "string") {
-					return false;
+				if (cloak.particles) {
+					cloakPrice += 3;
+					details += ` + Particles: 3.00€`;
 				}
 
-				const additionalCloaks = parseInt(data.additionalCloaks, 10);
-				const recoloredCloaks = parseInt(data.recoloredCloaks, 10);
-
-				if (isNaN(additionalCloaks) || isNaN(recoloredCloaks) || additionalCloaks > 10 || recoloredCloaks > 10) {
-					return false;
+				if (cloak.animation) {
+					const animationPrice = getAnimationPrice(cloak.type, cloak.resolution, cloak.animationFrames);
+					cloakPrice += animationPrice;
+					details += ` + Animation: ${animationPrice.toFixed(2)}€`;
 				}
 
-				const totalCloaksCount = additionalCloaks + recoloredCloaks + 1;
-				if (totalCloaksCount > 21) {
-					return false;
-				}
+				priceBreakdown.push(details);
+				totalPrice += cloakPrice;
+			});
 
-				const validResolutions = ["10x16 (Global & Client)", "20x32 (Client)", "40x64 (Client)"];
-				for (const cloak of data.cloaks) {
-					if (!validResolutions.includes(cloak.resolution)) {
-						return false;
-					}
+			const discountValue = document.getElementById("cloakDiscount").value.trim();
+			const discount = parseFloat(discountValue);
 
-					if (cloak.animation && (isNaN(cloak.animationFrames) || cloak.animationFrames > 50)) {
-						return false;
-					}
-				}
-
-				return true;
+			if (isNaN(discount) && discountValue !== "") {
+				formData.code = discountValue;
+				priceBreakdown.push(`Discount Code Applied: ${discountValue}`);
+			} else if (!isNaN(discount) && discount > 0) {
+				priceBreakdown.push(`Discount Applied: ${discount}%`);
+				totalPrice *= 1 - discount / 100;
 			}
 
-			function importJson(jsonString) {
-				try {
-					const jsonData = JSON.parse(jsonString);
+			discountedPrice = totalPrice.toFixed(2);
+			showNotification(`Total Cloak Price: ${discountedPrice}€`, `2C7F2C`, `55ff55`);
 
-					// Verification logic
-					const isValid = verifyJsonData(jsonData);
-					if (!isValid) {
-						showNotification("Invalid JSON data. Please check your input.", `7F2B2B`, `FF5555`);
-						return;
-					}
+			let summary = priceBreakdown.join("<br>");
+			const formattedJsonString = JSON.stringify(formData, null, 2);
+			const compactJsonString = JSON.stringify(formData);
 
-					setFormData(jsonData);
-					showNotification("JSON imported successfully", `2C7F2C`, `55ff55`);
+			const lines = formattedJsonString.split("\n");
+			const maxLines = 10;
+			const visibleLines = lines.slice(0, maxLines).join("\n");
+			const isOverflow = lines.length > maxLines;
+
+			const jsonDisplay = document.getElementById("jsonDisplay");
+			jsonDisplay.innerHTML = visibleLines + (isOverflow ? "\n..." : "");
+
+			document.getElementById("jsonOutputHidden").value = compactJsonString;
+
+			document.getElementById("copyJsonButton").classList.remove("hidden");
+			document.getElementById("jsonOutputContainer").classList.remove("hidden");
+
+			const result = document.getElementById("result");
+			result.innerHTML = summary + `<h3>Total Price: ${discountedPrice}€</h3>`;
+			result.classList.remove("hidden");
+		}
+
+		function displayJsonFormatted(jsonString) {
+			const lines = jsonString.split("\n");
+			const maxLines = 10;
+			const visibleLines = lines.slice(0, maxLines).join("\n");
+			const isOverflow = lines.length > maxLines;
+
+			const jsonDisplay = document.getElementById("jsonDisplay");
+			jsonDisplay.innerHTML = visibleLines + (isOverflow ? "\n..." : "");
+		}
+
+		function copyJson() {
+			const jsonOutputHidden = document.getElementById("jsonOutputHidden");
+
+			navigator.clipboard
+				.writeText(jsonOutputHidden.value)
+				.then(() => {
+					showNotification("JSON copied to clipboard", `2C7F2C`, `55ff55`);
+
+					localStorage.clear();
+
+					document.getElementById("cloakForm").reset();
+					updateCloakSelect();
 
 					const jsonOutputContainer = document.getElementById("jsonOutputContainer");
 					const copyJsonButton = document.getElementById("copyJsonButton");
 					const jsonDisplay = document.getElementById("jsonDisplay");
-					const jsonOutputHidden = document.getElementById("jsonOutputHidden");
-					const result = document.getElementById("result");
 
 					jsonOutputContainer.classList.add("hidden");
 					copyJsonButton.classList.add("hidden");
+
 					jsonDisplay.innerHTML = "";
 					jsonOutputHidden.value = "";
+
+					const result = document.getElementById("result");
 					result.classList.add("hidden");
 					result.innerHTML = "";
 
 					clearErrorMessages();
-					document.body.classList.remove("no-scroll");
-				} catch (error) {
-					showNotification("Invalid JSON format", `7F2B2B`, `ff5555`);
+				})
+				.catch((err) => {
+					showNotification("Failed to copy JSON", `7F2B2B`, `ff5555`);
+					console.error("Could not copy text: ", err);
+				});
+		}
+
+		function showImportPopup() {
+			const createElementWithClass = (tag, ...classNames) => {
+				const element = document.createElement(tag);
+				classNames.forEach((className) => element.classList.add(className));
+				return element;
+			};
+
+			const overlay = createElementWithClass("div", "blur-overlay");
+			const popup = createElementWithClass("div", "detailed-popup");
+			const content = createElementWithClass("div", "content");
+
+			const textarea = createElementWithClass("textarea", "form-control", "auto-expand", "import-textarea");
+			textarea.rows = 10;
+			textarea.placeholder = "Paste your JSON here...";
+
+			const importButton = createElementWithClass("button");
+			importButton.textContent = "Import JSON";
+			importButton.onclick = () => {
+				importJson(textarea.value);
+				overlay.remove();
+				popup.remove();
+				document.body.classList.remove("no-scroll");
+			};
+
+			const fileInput = createElementWithClass("input", "form-control");
+			fileInput.type = "file";
+			fileInput.accept = ".json";
+			fileInput.onchange = (event) => handleFileImport(event);
+
+			const closeButton = createElementWithClass("button");
+			closeButton.textContent = "Close";
+			closeButton.onclick = () => {
+				overlay.remove();
+				popup.remove();
+				document.body.classList.remove("no-scroll");
+			};
+
+			content.appendChild(textarea);
+			content.appendChild(importButton);
+			content.appendChild(closeButton);
+			content.appendChild(fileInput);
+			popup.appendChild(content);
+
+			document.body.appendChild(overlay);
+			document.body.appendChild(popup);
+			document.body.classList.add("no-scroll");
+		}
+
+		function clearErrorMessages() {
+			document.querySelectorAll(".detailed-popup, .blur-overlay").forEach((element) => element.remove());
+			document.body.classList.remove("no-scroll");
+		}
+
+		function verifyJsonData(data) {
+			if (typeof data.additionalCloaks !== "string" || typeof data.recoloredCloaks !== "string") {
+				return false;
+			}
+
+			const additionalCloaks = parseInt(data.additionalCloaks, 10);
+			const recoloredCloaks = parseInt(data.recoloredCloaks, 10);
+
+			if (isNaN(additionalCloaks) || isNaN(recoloredCloaks) || additionalCloaks > 10 || recoloredCloaks > 10) {
+				return false;
+			}
+
+			const totalCloaksCount = additionalCloaks + recoloredCloaks + 1;
+			if (totalCloaksCount > 21) {
+				return false;
+			}
+
+			const validResolutions = ["10x16 (Global & Client)", "20x32 (Client)", "40x64 (Client)"];
+			for (const cloak of data.cloaks) {
+				if (!validResolutions.includes(cloak.resolution)) {
+					return false;
+				}
+
+				if (cloak.animation && (isNaN(cloak.animationFrames) || cloak.animationFrames > 50)) {
+					return false;
 				}
 			}
 
-			function validateDiscount(input) {
-				const discountValue = input.value.trim();
-				console.log("Validating discount value:", discountValue);
-				const discountPattern = /^(100|[1-9][0-9]?|[A-Za-z]{6})$/;
+			return true;
+		}
 
-				if (discountValue === "") {
-					console.log("Discount value is empty, setting to blank.");
-					input.value = "";
-				} else if (!discountPattern.test(discountValue)) {
-					console.log("Discount value is invalid:", discountValue);
-					input.value = discountValue.slice(0, -1);
+		function importJson(jsonString) {
+			try {
+				const jsonData = JSON.parse(jsonString);
+
+				// Verification logic
+				const isValid = verifyJsonData(jsonData);
+				if (!isValid) {
+					showNotification("Invalid JSON data. Please check your input.", `7F2B2B`, `FF5555`);
+					return;
 				}
+
+				setFormData(jsonData);
+				showNotification("JSON imported successfully", `2C7F2C`, `55ff55`);
+
+				const jsonOutputContainer = document.getElementById("jsonOutputContainer");
+				const copyJsonButton = document.getElementById("copyJsonButton");
+				const jsonDisplay = document.getElementById("jsonDisplay");
+				const jsonOutputHidden = document.getElementById("jsonOutputHidden");
+				const result = document.getElementById("result");
+
+				jsonOutputContainer.classList.add("hidden");
+				copyJsonButton.classList.add("hidden");
+				jsonDisplay.innerHTML = "";
+				jsonOutputHidden.value = "";
+				result.classList.add("hidden");
+				result.innerHTML = "";
+
+				clearErrorMessages();
+				document.body.classList.remove("no-scroll");
+			} catch (error) {
+				showNotification("Invalid JSON format", `7F2B2B`, `ff5555`);
 			}
+		}
 
-			function validateForm() {
-				let valid = true;
-				const messages = [];
+		function validateDiscount(input) {
+			const discountValue = input.value.trim();
+			console.log("Validating discount value:", discountValue);
+			const discountPattern = /^(100|[1-9][0-9]?|[A-Za-z]{6})$/;
 
-				document.querySelectorAll(".cloak-group").forEach((group) => {
-					const index = group.id.replace("cloak", "");
-					const description = document.getElementById(`description${index}`);
-					const particlesCheckbox = document.getElementById(`particles${index}`);
-					const particlesDescription = document.getElementById(`particlesDesc${index}`);
-					const animationCheckbox = document.getElementById(`animation${index}`);
-					const animationFrames = document.getElementById(`animationFrames${index}`);
-					const animationDescription = document.getElementById(`animationDesc${index}`);
+			if (discountValue === "") {
+				console.log("Discount value is empty, setting to blank.");
+				input.value = "";
+			} else if (!discountPattern.test(discountValue)) {
+				console.log("Discount value is invalid:", discountValue);
+				input.value = discountValue.slice(0, -1);
+			}
+		}
 
-					const checkRequiredField = (checkbox, field, fieldName) => {
-						if (checkbox.checked && !field.value.trim()) {
-							messages.push(`${group.querySelector("h3").textContent} ${fieldName} is required.`);
-							valid = false;
-						}
-					};
+		function validateForm() {
+			let valid = true;
+			const messages = [];
 
-					if (!description.value.trim()) {
-						messages.push(`${group.querySelector("h3").textContent} description is required.`);
+			document.querySelectorAll(".cloak-group").forEach((group) => {
+				const index = group.id.replace("cloak", "");
+				const description = document.getElementById(`description${index}`);
+				const particlesCheckbox = document.getElementById(`particles${index}`);
+				const particlesDescription = document.getElementById(`particlesDesc${index}`);
+				const animationCheckbox = document.getElementById(`animation${index}`);
+				const animationFrames = document.getElementById(`animationFrames${index}`);
+				const animationDescription = document.getElementById(`animationDesc${index}`);
+
+				const checkRequiredField = (checkbox, field, fieldName) => {
+					if (checkbox.checked && !field.value.trim()) {
+						messages.push(`${group.querySelector("h3").textContent} ${fieldName} is required.`);
 						valid = false;
 					}
+				};
 
-					checkRequiredField(particlesCheckbox, particlesDescription, "particles description");
+				if (!description.value.trim()) {
+					messages.push(`${group.querySelector("h3").textContent} description is required.`);
+					valid = false;
+				}
 
-					if (animationCheckbox.checked) {
-						if (!animationDescription.value.trim()) {
-							messages.push(`${group.querySelector("h3").textContent} animation description is required.`);
-							valid = false;
-						}
-						const frames = parseInt(animationFrames.value, 10);
-						if (isNaN(frames) || frames < 1 || frames > 50) {
-							messages.push(`${group.querySelector("h3").textContent} animation frames must be between 1 and 50.`);
-							valid = false;
-						}
+				checkRequiredField(particlesCheckbox, particlesDescription, "particles description");
+
+				if (animationCheckbox.checked) {
+					if (!animationDescription.value.trim()) {
+						messages.push(`${group.querySelector("h3").textContent} animation description is required.`);
+						valid = false;
 					}
-				});
-
-				const discountInput = document.getElementById("cloakDiscount").value.trim();
-				if (discountInput !== "") {
-					const discountPattern = /^(100|[1-9][0-9]?|[A-Za-z]{6})$/;
-					if (!discountPattern.test(discountInput)) {
-						messages.push("Invalid discount. Enter a number between 0 and 100 or a valid code.");
+					const frames = parseInt(animationFrames.value, 10);
+					if (isNaN(frames) || frames < 1 || frames > 50) {
+						messages.push(`${group.querySelector("h3").textContent} animation frames must be between 1 and 50.`);
 						valid = false;
 					}
 				}
-
-				if (!valid) {
-					showNotification("There are errors in the form. Click for details.", `7F2B2B`, `ff5555`);
-					document.getElementById("notification").onclick = () => showDetailedPopup(messages);
-				}
-
-				return valid;
-			}
-
-			function setFormData(data) {
-				try {
-					const setElementValue = (id, value, defaultValue = "") => {
-						const element = document.getElementById(id);
-						if (element) element.value = value || defaultValue;
-					};
-
-					const setElementChecked = (id, checked) => {
-						const element = document.getElementById(id);
-						if (element) element.checked = checked || false;
-					};
-
-					const setElementDisplay = (id, display) => {
-						const element = document.getElementById(id);
-						if (element) element.style.display = display ? "block" : "none";
-					};
-
-					if (data.additionalCloaks !== undefined) {
-						setElementValue("additionalCloaks", data.additionalCloaks);
-						setElementValue("recolors", data.recoloredCloaks);
-
-						const additionalCloaksCount = parseInt(data.additionalCloaks, 10) || 0;
-						const recolorsCount = parseInt(data.recoloredCloaks, 10) || 0;
-						const totalCloaksCount = additionalCloaksCount + recolorsCount + 1;
-
-						const cloaksContainer = document.getElementById("cloaks");
-						const cloakSelect = document.getElementById("cloakSelect");
-
-						cloakSelect.innerHTML = '<option value="0">Main Cloak</option>';
-						cloaksContainer.innerHTML = createCloakGroup("Main Cloak", 0);
-
-						for (let i = 1; i <= additionalCloaksCount; i++) {
-							cloakSelect.innerHTML += `<option value="${i}">Additional Cloak ${i}</option>`;
-							cloaksContainer.innerHTML += createCloakGroup(`Additional Cloak ${i}`, i);
-						}
-
-						for (let i = 1; i <= recolorsCount; i++) {
-							const cloakIndex = additionalCloaksCount + i;
-							cloakSelect.innerHTML += `<option value="${cloakIndex}">Recolored Cloak ${i}</option>`;
-							cloaksContainer.innerHTML += createCloakGroup(`Recolored Cloak ${i}`, cloakIndex);
-						}
-
-						if (data.cloaks) {
-							data.cloaks.forEach((cloak, index) => {
-								setElementValue(`description${index}`, cloak.description, "");
-								setElementValue(`resolution${index}`, cloak.resolution || "10x16 (Global & Client)");
-								setElementChecked(`particles${index}`, cloak.particles);
-								setElementValue(`particlesDesc${index}`, cloak.particlesDesc, "");
-								setElementDisplay(`particlesDescription${index}`, cloak.particles);
-								setElementChecked(`animation${index}`, cloak.animation);
-								setElementValue(`animationFrames${index}`, cloak.animationFrames);
-								setElementValue(`animationDesc${index}`, cloak.animationDesc, "");
-								setElementDisplay(`animationDescription${index}`, cloak.animation);
-							});
-
-							document.getElementById("cloak0").style.display = "block";
-
-							data.cloaks.forEach((_, index) => {
-								updatePrice("resolution", index);
-								updatePrice("particles", index);
-								updatePrice("animation", index);
-							});
-						}
-
-						if (data.code) {
-							setElementValue("cloakDiscount", data.code);
-						}
-					}
-				} catch (error) {
-					console.error("Error loading form data:", error);
-					showNotification("Error loading imported data.", `7F2B2B`, `ff5555`);
-				}
-			}
-
-			function autoExpand(field) {
-				field.style.height = "inherit";
-
-				const computed = window.getComputedStyle(field);
-				const height = parseInt(computed.getPropertyValue("border-top-width"), 10) + parseInt(computed.getPropertyValue("padding-top"), 10) + field.scrollHeight + parseInt(computed.getPropertyValue("padding-bottom"), 10) + parseInt(computed.getPropertyValue("border-bottom-width"), 10);
-
-				field.style.height = `${height - 25}px`;
-			}
-
-			function saveProgress() {
-				const formData = getCloakFormData();
-				localStorage.setItem("cloakFormData", JSON.stringify(formData));
-			}
-
-			function validateFrameCount(input) {
-				const frameCount = parseInt(input.value, 10);
-				if (isNaN(frameCount) || frameCount < 1) {
-					input.value = 1;
-				} else if (frameCount > 50) {
-					input.value = 50;
-				}
-			}
-
-			function loadProgress() {
-				const savedData = localStorage.getItem("cloakFormData");
-				let dataToLoad = savedData ? JSON.parse(savedData) : {};
-				setFormData(dataToLoad);
-			}
-
-			document.addEventListener("DOMContentLoaded", () => {
-				document.getElementById("additionalCloaks").addEventListener("input", updateCloakSelect);
-				document.getElementById("recolors").addEventListener("input", updateCloakSelect);
-
-				document.getElementById("cloakSelect").addEventListener("change", (event) => {
-					const selectedCloak = event.target.value;
-					document.querySelectorAll(".cloak-group").forEach((group) => {
-						group.style.display = group.id === `cloak${selectedCloak}` ? "block" : "none";
-					});
-					updatePrice("resolution", selectedCloak);
-					updatePrice("particles", selectedCloak);
-					updatePrice("animation", selectedCloak);
-				});
-
-				document.addEventListener("change", (event) => {
-					if (event.target.matches(".form-check-input")) {
-						const cloakIndex = event.target.name.replace(/\D/g, "");
-						const targetId = event.target.id.replace("particles", "particlesDescription").replace("animation", "animationDescription");
-						const targetElement = document.getElementById(targetId);
-						if (targetElement) {
-							targetElement.style.display = event.target.checked ? "block" : "none";
-						}
-					}
-				});
-
-				document.addEventListener("input", (event) => {
-					if (event.target.tagName.toLowerCase() === "textarea" && event.target.classList.contains("auto-expand")) {
-						autoExpand(event.target);
-					}
-					if (event.target.id.startsWith("animationFrames")) {
-						validateFrameCount(event.target);
-					}
-					if (event.target.id === "cloakDiscount") {
-						validateDiscount(event.target);
-					}
-				});
-
-				loadProgress();
-				updateCloakSelect();
-
-				setInterval(saveProgress, 500);
 			});
-		</script>
-	</body>
+
+			const discountInput = document.getElementById("cloakDiscount").value.trim();
+			if (discountInput !== "") {
+				const discountPattern = /^(100|[1-9][0-9]?|[A-Za-z]{6})$/;
+				if (!discountPattern.test(discountInput)) {
+					messages.push("Invalid discount. Enter a number between 0 and 100 or a valid code.");
+					valid = false;
+				}
+			}
+
+			if (!valid) {
+				showNotification("There are errors in the form. Click for details.", `7F2B2B`, `ff5555`);
+				document.getElementById("notification").onclick = () => showDetailedPopup(messages);
+			}
+
+			return valid;
+		}
+
+		function setFormData(data) {
+			try {
+				const setElementValue = (id, value, defaultValue = "") => {
+					const element = document.getElementById(id);
+					if (element) element.value = value || defaultValue;
+				};
+
+				const setElementChecked = (id, checked) => {
+					const element = document.getElementById(id);
+					if (element) element.checked = checked || false;
+				};
+
+				const setElementDisplay = (id, display) => {
+					const element = document.getElementById(id);
+					if (element) element.style.display = display ? "block" : "none";
+				};
+
+				if (data.additionalCloaks !== undefined) {
+					setElementValue("additionalCloaks", data.additionalCloaks);
+					setElementValue("recolors", data.recoloredCloaks);
+
+					const additionalCloaksCount = parseInt(data.additionalCloaks, 10) || 0;
+					const recolorsCount = parseInt(data.recoloredCloaks, 10) || 0;
+					const totalCloaksCount = additionalCloaksCount + recolorsCount + 1;
+
+					const cloaksContainer = document.getElementById("cloaks");
+					const cloakSelect = document.getElementById("cloakSelect");
+
+					cloakSelect.innerHTML = '<option value="0">Main Cloak</option>';
+					cloaksContainer.innerHTML = createCloakGroup("Main Cloak", 0);
+
+					for (let i = 1; i <= additionalCloaksCount; i++) {
+						cloakSelect.innerHTML += `<option value="${i}">Additional Cloak ${i}</option>`;
+						cloaksContainer.innerHTML += createCloakGroup(`Additional Cloak ${i}`, i);
+					}
+
+					for (let i = 1; i <= recolorsCount; i++) {
+						const cloakIndex = additionalCloaksCount + i;
+						cloakSelect.innerHTML += `<option value="${cloakIndex}">Recolored Cloak ${i}</option>`;
+						cloaksContainer.innerHTML += createCloakGroup(`Recolored Cloak ${i}`, cloakIndex);
+					}
+
+					if (data.cloaks) {
+						data.cloaks.forEach((cloak, index) => {
+							setElementValue(`description${index}`, cloak.description, "");
+							setElementValue(`resolution${index}`, cloak.resolution || "10x16 (Global & Client)");
+							setElementChecked(`particles${index}`, cloak.particles);
+							setElementValue(`particlesDesc${index}`, cloak.particlesDesc, "");
+							setElementDisplay(`particlesDescription${index}`, cloak.particles);
+							setElementChecked(`animation${index}`, cloak.animation);
+							setElementValue(`animationFrames${index}`, cloak.animationFrames);
+							setElementValue(`animationDesc${index}`, cloak.animationDesc, "");
+							setElementDisplay(`animationDescription${index}`, cloak.animation);
+						});
+
+						document.getElementById("cloak0").style.display = "block";
+
+						data.cloaks.forEach((_, index) => {
+							updatePrice("resolution", index);
+							updatePrice("particles", index);
+							updatePrice("animation", index);
+						});
+					}
+
+					if (data.code) {
+						setElementValue("cloakDiscount", data.code);
+					}
+				}
+			} catch (error) {
+				console.error("Error loading form data:", error);
+				showNotification("Error loading imported data.", `7F2B2B`, `ff5555`);
+			}
+		}
+
+		function autoExpand(field) {
+			field.style.height = "inherit";
+
+			const computed = window.getComputedStyle(field);
+			const height = parseInt(computed.getPropertyValue("border-top-width"), 10) + parseInt(computed.getPropertyValue("padding-top"), 10) + field.scrollHeight + parseInt(computed.getPropertyValue("padding-bottom"), 10) + parseInt(computed.getPropertyValue("border-bottom-width"), 10);
+
+			field.style.height = `${height - 25}px`;
+		}
+
+		function saveProgress() {
+			const formData = getCloakFormData();
+			localStorage.setItem("cloakFormData", JSON.stringify(formData));
+		}
+
+		function validateFrameCount(input) {
+			const frameCount = parseInt(input.value, 10);
+			if (isNaN(frameCount) || frameCount < 1) {
+				input.value = 1;
+			} else if (frameCount > 50) {
+				input.value = 50;
+			}
+		}
+
+		function loadProgress() {
+			const savedData = localStorage.getItem("cloakFormData");
+			let dataToLoad = savedData ? JSON.parse(savedData) : {};
+			setFormData(dataToLoad);
+		}
+
+		document.addEventListener("DOMContentLoaded", () => {
+			document.getElementById("additionalCloaks").addEventListener("input", updateCloakSelect);
+			document.getElementById("recolors").addEventListener("input", updateCloakSelect);
+
+			document.getElementById("cloakSelect").addEventListener("change", (event) => {
+				const selectedCloak = event.target.value;
+				document.querySelectorAll(".cloak-group").forEach((group) => {
+					group.style.display = group.id === `cloak${selectedCloak}` ? "block" : "none";
+				});
+				updatePrice("resolution", selectedCloak);
+				updatePrice("particles", selectedCloak);
+				updatePrice("animation", selectedCloak);
+			});
+
+			document.addEventListener("change", (event) => {
+				if (event.target.matches(".form-check-input")) {
+					const cloakIndex = event.target.name.replace(/\D/g, "");
+					const targetId = event.target.id.replace("particles", "particlesDescription").replace("animation", "animationDescription");
+					const targetElement = document.getElementById(targetId);
+					if (targetElement) {
+						targetElement.style.display = event.target.checked ? "block" : "none";
+					}
+				}
+			});
+
+			document.addEventListener("input", (event) => {
+				if (event.target.tagName.toLowerCase() === "textarea" && event.target.classList.contains("auto-expand")) {
+					autoExpand(event.target);
+				}
+				if (event.target.id.startsWith("animationFrames")) {
+					validateFrameCount(event.target);
+				}
+				if (event.target.id === "cloakDiscount") {
+					validateDiscount(event.target);
+				}
+			});
+
+			loadProgress();
+			updateCloakSelect();
+
+			setInterval(saveProgress, 500);
+		});
+	</script>
+</body>
+
 </html>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>RAIIN</title>
-		<link rel="stylesheet" href="styles.css" />
-	</head>
-	<body>
-		<header>
-			<pre>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>RAIIN</title>
+	<link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+	<header>
+		<pre>
       :::::::::      :::     ::::::::::: ::::::::::: ::::    ::: 
      :+:    :+:   :+: :+:       :+:         :+:     :+:+:   :+:  
     +:+    +:+  +:+   +:+      +:+         +:+     :+:+:+  +:+   
@@ -16,84 +18,109 @@
   +#+    +#+ +#+     +#+     +#+         +#+     +#+  +#+#+#     
  #+#    #+# #+#     #+#     #+#         #+#     #+#   #+#+#      
 ###    ### ###     ### ########### ########### ###    ####       
-               </pre
-			>
-			<h1>Welcome to RAIIN</h1>
-		</header>
-		<div class="container">
-			<nav>
-				<ul>
-					<li><a href="services.html">Services</a></li>
-					<li><a href="how-to-order.html">How to Order</a></li>
-					<li><a href="payment-information.html">Payment Information</a></li>
-					<li><a href="receive.html">Receive Your Order</a></li>
-					<li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
-					<li><a href="contact-us.html">Contact Us</a></li>
-					<li><a href="prices.html">Price Calculator</a></li>
-				</ul>
-			</nav>
-			<main>
-				<section id="terms-and-conditions">
-					<div class="terms-and-conditions">
-						<h2>Terms and Conditions</h2>
-						<p>By accessing this website and/or purchasing my services, you agree to be bound by these terms and conditions. Please read them carefully.</p>
-						<ol>
-							<li>
-								<strong>Definitions</strong>
-								<p>In these terms and conditions, "you" and "your" refer to the client or user of my services.</p>
-							</li>
+		</pre>
+		<h1>Welcome to RAIIN</h1>
+	</header>
+	<div class="container">
+		<nav>
+			<button onclick="toggleMenu()">Menu</button>
+			<ul id="menu">
+				<li><a href="services.html">Services</a></li>
+				<li><a href="how-to-order.html">How to Order</a></li>
+				<li><a href="payment-information.html">Payment Information</a></li>
+				<li><a href="receive.html">Receive Your Order</a></li>
+				<li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+				<li><a href="contact-us.html">Contact Us</a></li>
+				<li><a href="prices.html">Price Calculator</a></li>
+			</ul>
+		</nav>
+		<main>
+			<section id="terms-and-conditions">
+				<div class="terms-and-conditions">
+					<h2>Terms and Conditions</h2>
+					<p>By accessing this website and/or purchasing my services, you agree to be bound by these terms and
+						conditions. Please read them carefully.</p>
+					<ol>
+						<li>
+							<strong>Definitions</strong>
+							<p>In these terms and conditions, "you" and "your" refer to the client or user of my
+								services.</p>
+						</li>
 
-							<li>
-								<strong>Scope of Services</strong>
-								<p>My services include but are not limited to graphic design, digital creations, and custom artwork.</p>
-							</li>
+						<li>
+							<strong>Scope of Services</strong>
+							<p>My services include but are not limited to graphic design, digital creations, and custom
+								artwork.</p>
+						</li>
 
-							<li>
-								<strong>Ownership and Usage Rights</strong>
-								<p>All purchased creations are for personal use only and cannot be resold or claimed as your own work.</p>
-								<p>Thumbnail designs may be used without giving credit, but credit for sky overlays in resource packs is appreciated.</p>
-								<p>Any attempt to resell purchased creations will result in blacklisting from future purchases and a permanent ban from my Discord server.</p>
-							</li>
+						<li>
+							<strong>Ownership and Usage Rights</strong>
+							<p>All purchased creations are for personal use only and cannot be resold or claimed as your
+								own work.</p>
+							<p>Thumbnail designs may be used without giving credit, but credit for sky overlays in
+								resource packs is appreciated.</p>
+							<p>Any attempt to resell purchased creations will result in blacklisting from future
+								purchases and a permanent ban from my Discord server.</p>
+						</li>
 
-							<li>
-								<strong>Payment and Refunds</strong>
-								<p>Payment for services is required upfront. Refunds will be considered on a case-by-case basis and are subject to my discretion.</p>
-							</li>
+						<li>
+							<strong>Payment and Refunds</strong>
+							<p>Payment for services is required upfront. Refunds will be considered on a case-by-case
+								basis and are subject to my discretion.</p>
+						</li>
 
-							<li>
-								<strong>Communication</strong>
-								<p>I strive to maintain clear and timely communication with my clients. Any inquiries or concerns should be directed to TheEnemiez through my designated communication channels.</p>
-							</li>
+						<li>
+							<strong>Communication</strong>
+							<p>I strive to maintain clear and timely communication with my clients. Any inquiries or
+								concerns should be directed to TheEnemiez through my designated communication channels.
+							</p>
+						</li>
 
-							<li>
-								<strong>Confidentiality</strong>
-								<p>I respect the privacy of my clients and will not disclose any confidential information shared during the course of my services.</p>
-							</li>
+						<li>
+							<strong>Confidentiality</strong>
+							<p>I respect the privacy of my clients and will not disclose any confidential information
+								shared during the course of my services.</p>
+						</li>
 
-							<li>
-								<strong>Limitation of Liability</strong>
-								<p>I shall not be liable for any indirect, special, consequential, or incidental damages arising out of or in connection with my services.</p>
-								<p>However, in the event of any loss of access to purchased creations, you may provide your order number, and I will assist you in retrieving your downloads.</p>
-							</li>
+						<li>
+							<strong>Limitation of Liability</strong>
+							<p>I shall not be liable for any indirect, special, consequential, or incidental damages
+								arising out of or in connection with my services.</p>
+							<p>However, in the event of any loss of access to purchased creations, you may provide your
+								order number, and I will assist you in retrieving your downloads.</p>
+						</li>
 
-							<li>
-								<strong>Changes to Terms and Conditions</strong>
-								<p>I reserve the right to update or modify these terms and conditions at any time without prior notice. It is your responsibility to review these terms periodically for changes.</p>
-							</li>
-						</ol>
-					</div>
-				</section>
-			</main>
+						<li>
+							<strong>Changes to Terms and Conditions</strong>
+							<p>I reserve the right to update or modify these terms and conditions at any time without
+								prior notice. It is your responsibility to review these terms periodically for changes.
+							</p>
+						</li>
+					</ol>
+				</div>
+			</section>
+		</main>
+	</div>
+	<footer>
+		<div class="footer-content">
+			<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR">RAIIN Discord</a> | @TheEnemiez</p>
+			<ul class="social-links">
+				<li><a href="https://www.youtube.com/@TheEnemiez">TheEnemiez YT</a><br /></li>
+				<li><a href="https://www.youtube.com/@Cookiehh">Cookiehh YT</a><br /></li>
+			</ul>
+			<p>© 2024 RAIIN. All rights reserved.</p>
 		</div>
-		<footer>
-			<div class="footer-content">
-				<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR">RAIIN Discord</a> | @TheEnemiez</p>
-				<ul class="social-links">
-					<li><a href="https://www.youtube.com/@TheEnemiez">TheEnemiez YT</a><br /></li>
-					<li><a href="https://www.youtube.com/@Cookiehh">Cookiehh YT</a><br /></li>
-				</ul>
-				<p>© 2024 RAIIN. All rights reserved.</p>
-			</div>
-		</footer>
-	</body>
+	</footer>
+	<script>
+		function toggleMenu() {
+			var menu = document.getElementById('menu');
+			if (menu.classList.contains('show')) {
+				menu.classList.remove('show');
+			} else {
+				menu.classList.add('show');
+			}
+		}
+	</script>
+</body>
+
 </html>

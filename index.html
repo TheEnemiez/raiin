@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>RAIIN</title>
-		<link rel="stylesheet" href="styles.css" />
-	</head>
-	<body>
-		<header>
-			<pre>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>RAIIN</title>
+	<link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+	<header>
+		<pre>
       :::::::::      :::     ::::::::::: ::::::::::: ::::    ::: 
      :+:    :+:   :+: :+:       :+:         :+:     :+:+:   :+:  
     +:+    +:+  +:+   +:+      +:+         +:+     :+:+:+  +:+   
@@ -16,35 +18,47 @@
   +#+    +#+ +#+     +#+     +#+         +#+     +#+  +#+#+#     
  #+#    #+# #+#     #+#     #+#         #+#     #+#   #+#+#      
 ###    ### ###     ### ########### ########### ###    ####       
-               </pre
-			>
-			<h1>Welcome to RAIIN</h1>
-		</header>
-		<div class="container">
-			<nav>
-				<ul>
-					<li><a href="services.html">Services</a></li>
-					<li><a href="how-to-order.html">How to Order</a></li>
-					<li><a href="payment-information.html">Payment Information</a></li>
-					<li><a href="receive.html">Receive Your Order</a></li>
-					<li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
-					<li><a href="contact-us.html">Contact Us</a></li>
-					<li><a href="prices.html">Price Calculator</a></li>
-				</ul>
-			</nav>
-			<main>
-				<p>Explore the different services we offer and learn how to place an order. Use the sidebar to navigate through the available options.</p>
-			</main>
+		</pre>
+		<h1>Welcome to RAIIN</h1>
+	</header>
+	<div class="container">
+		<nav>
+			<button onclick="toggleMenu()">Menu</button>
+			<ul id="menu">
+				<li><a href="services.html">Services</a></li>
+				<li><a href="how-to-order.html">How to Order</a></li>
+				<li><a href="payment-information.html">Payment Information</a></li>
+				<li><a href="receive.html">Receive Your Order</a></li>
+				<li><a href="terms-and-conditions.html">Terms and Conditions</a></li>
+				<li><a href="contact-us.html">Contact Us</a></li>
+				<li><a href="prices.html">Price Calculator</a></li>
+			</ul>
+		</nav>
+		<main>
+			<p>Explore the different services we offer and learn how to place an order. Use the sidebar to navigate
+				through the available options.</p>
+		</main>
+	</div>
+	<footer>
+		<div class="footer-content">
+			<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR">RAIIN Discord</a> | @TheEnemiez</p>
+			<ul class="social-links">
+				<li><a href="https://www.youtube.com/@TheEnemiez">TheEnemiez YT</a><br /></li>
+				<li><a href="https://www.youtube.com/@Cookiehh">Cookiehh YT</a><br /></li>
+			</ul>
+			<p>© 2024 RAIIN. All rights reserved.</p>
 		</div>
-		<footer>
-			<div class="footer-content">
-				<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR">RAIIN Discord</a> | @TheEnemiez</p>
-				<ul class="social-links">
-					<li><a href="https://www.youtube.com/@TheEnemiez">TheEnemiez YT</a><br /></li>
-					<li><a href="https://www.youtube.com/@Cookiehh">Cookiehh YT</a><br /></li>
-				</ul>
-				<p>© 2024 RAIIN. All rights reserved.</p>
-			</div>
-		</footer>
-	</body>
+	</footer>
+	<script>
+		function toggleMenu() {
+			var menu = document.getElementById('menu');
+			if (menu.classList.contains('show')) {
+				menu.classList.remove('show');
+			} else {
+				menu.classList.add('show');
+			}
+		}
+	</script>
+</body>
+
 </html>

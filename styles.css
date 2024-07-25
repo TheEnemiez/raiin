@@ -40,9 +40,11 @@ summary {
 }
 
 * {
-	max-width: 100vw; /* Ensure no element exceeds the viewport width */
+	max-width: 100vw;
+	/* Ensure no element exceeds the viewport width */
 	font-family: "Minecraft", "Arial", monospace, Arial, sans-serif;
 }
+
 body {
 	background-color: #1a1a1a;
 	color: #fff;
@@ -52,32 +54,45 @@ body {
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	-moz-user-select: none;
-	overflow-x: hidden; /* Prevent horizontal scrolling */
+	overflow-x: hidden;
+	/* Prevent horizontal scrolling */
 }
+
 pre {
 	font-family: "Courier New", Courier, monospace;
 	text-shadow: 0px 0px 25px rgba(255, 255, 255, 1);
 	font-size: 16px;
 	white-space: pre;
 }
+
 b {
 	color: #fff;
 }
+
 nav {
 	background-color: #333;
 	padding: 20px 10px;
 	margin-bottom: 20px;
+	text-align: center;
 }
+
 code {
 	text-shadow: #85b8ff 0px 0px 10px;
 	color: #a1c4ff;
 }
+
 nav ul {
 	display: flex;
 	justify-content: space-around;
-	flex-wrap: wrap;
+	/* Spread items around */
+	align-items: center;
 	list-style: none;
 	padding-left: 0;
+}
+
+nav ul.show {
+	display: flex;
+	max-height: 500px;
 }
 
 nav ul li {
@@ -89,9 +104,30 @@ nav ul li a {
 	font-weight: bold;
 	text-decoration: none;
 	transition: color 0.3s ease;
+	padding: 10px;
 }
 
 nav ul li a:hover {
+	color: #85b8ff;
+}
+
+nav button {
+	display: none;
+	background: none;
+	border: none;
+	color: #fff;
+	font-size: 16px;
+	font-weight: bold;
+	/* Make the button text bold */
+	cursor: pointer;
+	padding: 10px;
+	text-align: center;
+	/* Center the button text */
+	margin: 0 auto;
+	/* Center the button itself */
+}
+
+nav button:hover {
 	color: #85b8ff;
 }
 
@@ -149,6 +185,7 @@ a:hover {
 	margin: 20px 0;
 	color: #fff;
 }
+
 .form-grid {
 	display: grid;
 	background-color: #333;
@@ -163,7 +200,8 @@ a:hover {
 }
 
 .import-textarea {
-	max-height: 100px; /* Adjust max height as needed */
+	max-height: 100px;
+	/* Adjust max height as needed */
 	overflow: hidden;
 	position: relative;
 }
@@ -174,9 +212,11 @@ a:hover {
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 50px; /* Height of the fading effect */
+	height: 50px;
+	/* Height of the fading effect */
 	background: linear-gradient(to bottom, rgba(68, 68, 68, 0) 0%, #444 100%);
 }
+
 textarea {
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -253,6 +293,7 @@ textarea.auto-expand {
 	border: 2px solid #555;
 	background-color: #444;
 }
+
 .form-check-input:focus {
 	outline: none;
 	box-shadow: none;
@@ -262,6 +303,7 @@ textarea.auto-expand {
 	color: #fff;
 	font-size: 16px;
 }
+
 .notification {
 	position: fixed;
 	top: 20px;
@@ -277,18 +319,23 @@ textarea.auto-expand {
 }
 
 .json-display {
-	max-height: 200px; /* Adjust as needed for visibility */
-	overflow: hidden; /* Prevent scrolling */
+	max-height: 200px;
+	/* Adjust as needed for visibility */
+	overflow: hidden;
+	/* Prevent scrolling */
 	position: relative;
 	background: #444;
 	padding: 10px;
 	color: #fff;
 	border: 1px solid #555;
 	white-space: pre-wrap;
-	word-wrap: break-word; /* Ensure long words break and wrap onto the next line */
+	word-wrap: break-word;
+	/* Ensure long words break and wrap onto the next line */
 	box-sizing: border-box;
-	max-width: 100%; /* Ensure the box does not exceed the container's width */
-	overflow-wrap: break-word; /* Ensure the content breaks and wraps */
+	max-width: 100%;
+	/* Ensure the box does not exceed the container's width */
+	overflow-wrap: break-word;
+	/* Ensure the content breaks and wraps */
 	display: block;
 	word-break: break-all;
 }
@@ -299,7 +346,8 @@ textarea.auto-expand {
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 50px; /* Height of the fading effect */
+	height: 50px;
+	/* Height of the fading effect */
 	background: linear-gradient(to bottom, rgba(68, 68, 68, 0) 0%, #444 100%);
 }
 
@@ -312,6 +360,7 @@ textarea.auto-expand {
 	opacity: 1;
 	top: 20px;
 }
+
 /* Add the styles for the detailed popup */
 .detailed-popup {
 	position: fixed;
@@ -325,6 +374,7 @@ textarea.auto-expand {
 	z-index: 1000;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
 .detailed-popup {
 	position: fixed;
 	top: 50%;
@@ -337,13 +387,16 @@ textarea.auto-expand {
 	z-index: 1001;
 	box-shadow: 0 2px 300px rgba(0, 0, 0, 1);
 }
+
 .detailed-popup .content {
 	max-height: 400px;
 	overflow-y: auto;
 }
+
 .detailed-popup button {
 	margin-top: 10px;
-	margin-right: 6px; /* Add margin between buttons */
+	margin-right: 6px;
+	/* Add margin between buttons */
 	padding: 12px 20px;
 	background-color: #666;
 	border: none;
@@ -351,12 +404,16 @@ textarea.auto-expand {
 	cursor: pointer;
 	transition: background-color 0.3s;
 }
+
 .detailed-popup button:last-child {
-	margin-right: 0; /* Remove right margin for the last button */
+	margin-right: 0;
+	/* Remove right margin for the last button */
 }
+
 .detailed-popup button:hover {
 	background-color: #777;
 }
+
 .blur-overlay {
 	position: fixed;
 	top: 0;
@@ -379,9 +436,11 @@ select {
 	width: 100px;
 	box-sizing: border-box;
 }
+
 select:focus {
 	outline: none;
 }
+
 .hidden {
 	display: none;
 }
@@ -435,6 +494,7 @@ footer p {
 	from {
 		opacity: 0;
 	}
+
 	to {
 		opacity: 1;
 	}
@@ -482,12 +542,15 @@ section#prices ol li {
 .payment-methods a {
 	text-shadow: #85b8ff 0px 0px 10px;
 }
+
 .how-to-order a {
 	text-shadow: #85b8ff 0px 0px 10px;
 }
+
 #contact-us a {
 	text-shadow: #85b8ff 0px 0px 10px;
 }
+
 .contact-us p {
 	padding: 5px 0px;
 }
@@ -505,9 +568,11 @@ section#prices ol li {
 	border-radius: 10px;
 	border: 3px solid #292929;
 }
+
 .no-scroll {
 	overflow: hidden;
 }
+
 /* Scrollbar styling for select elements */
 select::-webkit-scrollbar {
 	width: 12px;
@@ -525,37 +590,30 @@ select::-webkit-scrollbar-thumb {
 
 #result {
 	margin-top: 20px;
-	font-size: 16px; /* Adjust the font size as needed */
-	color: #ffffff; /* Adjust the text color as needed */
+	font-size: 16px;
+	/* Adjust the font size as needed */
+	color: #ffffff;
+	/* Adjust the text color as needed */
 }
 
-@media (max-width: 600px) {
-	html,
-	body {
-		overflow-x: hidden; /* Prevent horizontal scrolling */
-	}
-	main {
-		width: 95%; /* Adjust main width for mobile */
-	}
-
+@media (max-width: 1300px) {
 	nav ul {
+		display: none;
 		flex-direction: column;
 		align-items: center;
+		list-style: none;
+		padding-left: 0;
+		transition: max-height 0.3s ease-in-out;
+		overflow: hidden;
+		max-height: 0;
 	}
 
-	nav ul li {
-		margin-bottom: 10px;
-		margin-right: 0;
+	nav ul.show {
+		display: flex;
+		max-height: 500px;
 	}
 
-	footer {
-		margin-top: 300px;
-		padding: 10px 0;
-	}
-
-	pre {
-		font-size: 7px;
-		padding: 10px 5px;
-		white-space: pre;
+	nav button {
+		display: block;
 	}
 }
