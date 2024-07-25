@@ -598,12 +598,12 @@ select::-webkit-scrollbar-thumb {
 
 @media (max-width: 1300px) {
 	nav ul {
+		width: 100vh;
 		display: none;
 		flex-direction: column;
 		align-items: center;
 		list-style: none;
 		padding-left: 0;
-		transition: max-height 0.3s ease-in-out;
 		overflow: hidden;
 		max-height: 0;
 	}
