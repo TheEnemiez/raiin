@@ -79,7 +79,8 @@
 				<button type="button" onclick="showImportPopup()">Import</button>
 				<input type="file" id="importFile" style="display: none" accept=".json"
 					onchange="handleFileImport(event)" />
-				<button type="button" id="copyJsonButton" class="hidden" onclick="copyJson()">Copy JSON</button>
+				<button type="button" id="copyJsonButton" class="hidden" onclick="copyJson()"
+					style="background-color: #2C7F2C; color: #55FF55;">Copy JSON and Proceed with Payment</button>
 			</div>
 
 			<div id="jsonOutputContainer" class="form-row hidden">
@@ -92,10 +93,10 @@
 	</main>
 	<footer>
 		<div class="footer-content">
-			<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR">RAIIN Discord</a> | @TheEnemiez</p>
+			<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR" target="_blank">RAIIN Discord</a> | @TheEnemiez</p>
 			<ul class="social-links">
-				<li><a href="https://www.youtube.com/@TheEnemiez">TheEnemiez YT</a><br /></li>
-				<li><a href="https://www.youtube.com/@Cookiehh">Cookiehh YT</a><br /></li>
+				<li><a href="https://www.youtube.com/@TheEnemiez" target="_blank">TheEnemiez YT</a><br /></li>
+				<li><a href="https://www.youtube.com/@Cookiehh" target="_blank">Cookiehh YT</a><br /></li>
 			</ul>
 			<p>© 2024 RAIIN. All rights reserved.</p>
 		</div>
@@ -213,12 +214,12 @@
 			const formData = new FormData(document.getElementById("skyForm"));
 			const data = {
 				additionalSkies: formData.get("additionalSkies"),
-				recoloredSkies: formData.get("recoloredSkies"),
+				recoloredSkies: formData.get("recoloredSkies"), // Ensure this line is included
 				skies: [],
 			};
 
 			const additionalSkiesCount = parseInt(data.additionalSkies, 10) || 0;
-			const recoloredSkiesCount = parseInt(data.recoloredSkies, 10) || 0;
+			const recoloredSkiesCount = parseInt(data.recoloredSkies, 10) || 0; // Corrected variable name
 			const skyCount = additionalSkiesCount + recoloredSkiesCount + 1;
 
 			for (let i = 0; i < skyCount; i++) {
@@ -455,6 +456,11 @@
 				document.body.classList.remove("no-scroll");
 			};
 
+			const fileInput = createElementWithClass("input", "form-control");
+			fileInput.type = "file";
+			fileInput.accept = ".json";
+			fileInput.onchange = (event) => handleFileImport(event);
+
 			const closeButton = createElementWithClass("button");
 			closeButton.textContent = "Close";
 			closeButton.onclick = () => {
@@ -466,6 +472,7 @@
 			content.appendChild(textarea);
 			content.appendChild(importButton);
 			content.appendChild(closeButton);
+			content.appendChild(fileInput);
 			popup.appendChild(content);
 
 			document.body.appendChild(overlay);
@@ -477,9 +484,51 @@
 			document.querySelectorAll(".detailed-popup, .blur-overlay").forEach((element) => element.remove());
 		}
 
+		function verifyJsonData(data) {
+			// Check if additionalSkies and recoloredSkies are within valid range
+			const additionalSkies = parseInt(data.additionalSkies, 10);
+			const recoloredSkies = parseInt(data.recoloredSkies, 10);
+
+			if (isNaN(additionalSkies) || isNaN(recoloredSkies) || additionalSkies > 10 || recoloredSkies > 10) {
+				return false;
+			}
+
+			// Check if code is a valid 6 character long string
+			const codePattern = /^[A-Za-z0-9]{6}$/;
+			if (data.code && !codePattern.test(data.code)) {
+				return false;
+			}
+
+			// Check if skies array is valid
+			const totalSkiesCount = additionalSkies + recoloredSkies + 1;
+			if (data.skies.length !== totalSkiesCount) {
+				return false;
+			}
+
+			// Validate each sky object in skies array
+			for (const sky of data.skies) {
+				if (!['main', 'additional', 'recolor'].includes(sky.type)) {
+					return false;
+				}
+				if (typeof sky.description !== 'string' && sky.description !== undefined) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
 		function importJson(jsonString) {
 			try {
 				const jsonData = JSON.parse(jsonString);
+
+				// Verification logic
+				const isValid = verifyJsonData(jsonData);
+				if (!isValid) {
+					showNotification("Invalid JSON data. Please check your input.", `7F2B2B`, `FF5555`);
+					return;
+				}
+
 				setSkyFormData(jsonData);
 				showNotification("JSON imported successfully", `2C7F2C`, `55ff55`);
 
@@ -503,6 +552,7 @@
 				showNotification("Invalid JSON format", `7F2B2B`, `ff5555`);
 			}
 		}
+
 		function validateDiscount(input) {
 			const discountValue = input.value.trim();
 			console.log("Validating discount value:", discountValue); // Log the discount value being validated

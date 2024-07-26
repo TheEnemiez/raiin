@@ -78,10 +78,9 @@
 						</select>
 					</div>
 					<div class="form-check">
-						<input type="checkbox" id="particles0" name="particles0" class="form-check-input"
-							onchange="updatePrice('particles', 0)" />
-						<label for="particles0" class="form-check-label">Particles: <span
-								id="particlesPrice0">3.00€</span></label>
+						<input type="checkbox" id="particles0" name="particles0" class="form-check-input" />
+						<label for="particles0" class="form-check-label">Particles: +<span
+								id="particlesPrice0">+3.00€</span></label>
 					</div>
 					<div class="form-group" id="particlesDescription0" style="display: none">
 						<label for="particlesDesc0">Particles Description</label>
@@ -112,7 +111,8 @@
 				<button type="button" onclick="showImportPopup()">Import</button>
 				<input type="file" id="importFile" style="display: none" accept=".json"
 					onchange="handleFileImport(event)" />
-				<button type="button" id="copyJsonButton" class="hidden" onclick="copyJson()">Copy JSON</button>
+				<button type="button" id="copyJsonButton" class="hidden" onclick="copyJson()"
+					style="background-color: #2C7F2C; color: #55FF55;">Copy JSON</button>
 			</div>
 
 			<div id="jsonOutputContainer" class="form-row hidden">
@@ -125,10 +125,10 @@
 	</main>
 	<footer>
 		<div class="footer-content">
-			<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR">RAIIN Discord</a> | @TheEnemiez</p>
+			<p>Contact us: <a href="https://discord.gg/x5xzeb9JBR" target="_blank">RAIIN Discord</a> | @TheEnemiez</p>
 			<ul class="social-links">
-				<li><a href="https://www.youtube.com/@TheEnemiez">TheEnemiez YT</a><br /></li>
-				<li><a href="https://www.youtube.com/@Cookiehh">Cookiehh YT</a><br /></li>
+				<li><a href="https://www.youtube.com/@TheEnemiez" target="_blank">TheEnemiez YT</a><br /></li>
+				<li><a href="https://www.youtube.com/@Cookiehh" target="_blank">Cookiehh YT</a><br /></li>
 			</ul>
 			<p>© 2024 RAIIN. All rights reserved.</p>
 		</div>
@@ -285,10 +285,6 @@
 				case "resolution":
 					document.getElementById(`resolutionPrice${index}`).innerText = `${resolutionPrice.toFixed(2)}€`;
 					updatePrice("animation", index);
-					break;
-				case "particles":
-					const particlesPrice = document.getElementById(`particles${index}`).checked ? 3.0 : 0.0;
-					document.getElementById(`particlesPrice${index}`).innerText = `${particlesPrice.toFixed(2)}€`;
 					break;
 				case "animation":
 					const framesElement = document.getElementById(`animationFrames${index}`);
@@ -448,7 +444,7 @@
             </div>
             <div class="form-check">
                 <input type="checkbox" id="particles${index}" name="particles${index}" class="form-check-input" onchange="updatePrice('particles', ${index})">
-                <label for="particles${index}" class="form-check-label">Particles: <span id="particlesPrice${index}">3.00€</span></label>
+                <label for="particles${index}" class="form-check-label">Particles: <span id="particlesPrice${index}">+3.00€</span></label>
             </div>
             <div class="form-group" id="particlesDescription${index}" style="display: none;">
                 <label for="particlesDesc${index}">Particles Description</label>
@@ -963,7 +959,6 @@
 					group.style.display = group.id === `cloak${selectedCloak}` ? "block" : "none";
 				});
 				updatePrice("resolution", selectedCloak);
-				updatePrice("particles", selectedCloak);
 				updatePrice("animation", selectedCloak);
 			});
 
