@@ -10,12 +10,14 @@
 </head>
 
 <body>
+	<div id="notification" class="notification hidden"></div>
+
 	<header>
 		<pre>
       :::::::::      :::     ::::::::::: ::::::::::: ::::    ::: 
      :+:    :+:   :+: :+:       :+:         :+:     :+:+:   :+:  
     +:+    +:+  +:+   +:+      +:+         +:+     :+:+:+  +:+   
-   +#++:++#:  +#++:++#++:     +#+         +#+     +#+ +:+ +#+    
+   +#++:++#:  +#++:++#++:     +#+         +#+     +#+  +#+#+#     
   +#+    +#+ +#+     +#+     +#+         +#+     +#+  +#+#+#     
  #+#    #+# #+#     #+#     #+#         #+#     #+#   #+#+#      
 ###    ### ###     ### ########### ########### ###    ####       
@@ -41,19 +43,6 @@
 
 			<div class="payment-methods">
 				<div class="payment-method">
-					<p><a href="https://revolut.me/deivydaskr" target="_blank">Revolut Payment Link</a></p>
-					<h3>SEPA Transfer Instructions</h3>
-					<p>Initiate Transfer: Open your online or mobile banking app. Select "SEPA Transfer."</p>
-					<p>Enter Details: IBAN: <code>LT273250008763443243</code>, BIC/SWIFT: <code>REVOLT21</code>, Amount:
-						Enter the payment amount in euros.</p>
-					<p>Confirm: Review and confirm.</p>
-
-					<h3>SWIFT Transfer Instructions</h3>
-					<p>Initiate Transfer: Open your online or mobile banking app. Choose "SWIFT Transfer."</p>
-					<p>Enter Details: IBAN: <code>LT273250008763443243</code>, BIC/SWIFT: <code>REVOLT21</code>, Amount:
-						Specify the payment amount.</p>
-					<p>Confirm: Review and confirm.</p>
-
 					<h3>Revolut-to-Revolut Transfer Instructions</h3>
 					<p>Open Revolut App: Go to "Payments."</p>
 					<p>Find me with the link: <a href="https://revolut.me/deivydaskr" target="_blank">Revolut Payment
@@ -66,6 +55,16 @@
 					</p>
 					<p>Enter Details: Add your card details. Specify the payment amount.</p>
 					<p>Complete the Payment: Review and confirm.</p>
+
+					<h3>My Details</h3>
+					<p>IBAN: <code id="iban">LT273250008763443243</code></p>
+					<p>BIC/SWIFT: <code id="bic">REVOLT21</code></p>
+
+					<button type="button" id="copyDetailsButton" class="copy-button" onclick="copyDetails()">Copy IBAN &
+						BIC</button>
+
+
+
 				</div>
 			</div>
 		</section>
@@ -88,6 +87,39 @@
 			} else {
 				menu.classList.add('show');
 			}
+		}
+
+		function copyDetails() {
+			const iban = document.getElementById('iban').textContent;
+			const bic = document.getElementById('bic').textContent;
+			const textToCopy = `IBAN: ${iban}\nBIC/SWIFT: ${bic}`;
+
+			navigator.clipboard.writeText(textToCopy).then(() => {
+				showNotification('IBAN & BIC copied to clipboard', '2C7F2C', '55ff55');
+			}).catch(err => {
+				console.error('Failed to copy text: ', err);
+			});
+		}
+
+		function showNotification(message, bgColor = '000000', textColor = 'ffffff') {
+			const notification = document.getElementById('notification');
+			notification.textContent = message;
+			notification.style.backgroundColor = `#${bgColor}`;
+			notification.style.color = `#${textColor}`;
+
+			if (notification.hideTimeout) {
+				clearTimeout(notification.hideTimeout);
+			}
+
+			notification.classList.remove('hidden');
+			notification.classList.add('visible');
+
+			notification.hideTimeout = setTimeout(() => {
+				requestAnimationFrame(() => {
+					notification.classList.remove('visible');
+					notification.classList.add('hidden');
+				});
+			}, 3000);
 		}
 	</script>
 </body>
